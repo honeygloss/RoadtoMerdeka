@@ -2,7 +2,6 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/cambo</item>
-        <item>@font/caprasimo</item>
         <item>@font/concert_one</item>
     </array>
 </resources>

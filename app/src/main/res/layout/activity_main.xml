@@ -38,10 +38,10 @@
     <EditText
         android:id="@+id/input_username"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/timeless_memories_regular"
-        android:text="@string/username_field"
+        android:hint="@string/username_field"
         android:padding="12dp" />
 
     <!-- Email Label -->
@@ -55,17 +55,20 @@
         android:gravity="start"
         android:text="@string/email_text"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <!-- Email Input -->
     <EditText
         android:id="@+id/input_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/timeless_memories_regular"
         android:hint="@string/email_field"
-        android:padding="12dp" />
+        android:padding="12dp"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress"/>
 
     <!-- Password Label -->
     <TextView
@@ -84,11 +87,13 @@
     <EditText
         android:id="@+id/input_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/timeless_memories_regular"
         android:hint="@string/password_field"
-        android:padding="12dp" />
+        android:padding="12dp"
+        android:inputType="textPassword"
+        android:autofillHints="password"/>
 
     <!-- Confirm Password Label -->
     <TextView
@@ -107,11 +112,13 @@
     <EditText
         android:id="@+id/input_password2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/timeless_memories_regular"
-        android:text="@string/confirmpass_field"
-        android:padding="12dp" />
+        android:hint="@string/confirmpass_field"
+        android:padding="12dp"
+        android:inputType="textPassword"
+        android:autofillHints="password"/>
 
     <!-- Sign Up Button -->
     <Button
@@ -129,7 +136,7 @@
     <TextView
         android:id="@+id/sign_in_link"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/timeless_memories_regular"
         android:gravity="center"
@@ -137,9 +144,11 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"
+        android:padding="8dp" />
 
 </LinearLayout>
+
 
 
 

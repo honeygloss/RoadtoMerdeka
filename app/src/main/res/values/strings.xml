@@ -14,4 +14,8 @@
     <string name="signup_text">Sign Up</string>
     <string name="signin_redirect">Already have an account? Sign In</string>
     <string name="signup_redirect">Dont have an account? Sign Up</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

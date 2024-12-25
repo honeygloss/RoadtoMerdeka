@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/Merdeka"
+    android:background="@color/grey"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
@@ -36,11 +36,13 @@
     <EditText
         android:id="@+id/input_username"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/timeless_memories_regular"
         android:hint="@string/login_field"
-        android:padding="12dp" />
+        android:padding="12dp"
+        android:inputType="text"
+        android:autofillHints="username"/>
 
     <!-- Password Label -->
     <TextView
@@ -59,11 +61,13 @@
     <EditText
         android:id="@+id/input_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/timeless_memories_regular"
         android:hint="@string/password_field"
-        android:padding="12dp" />
+        android:padding="12dp"
+        android:inputType="textPassword"
+        android:autofillHints="password"/>
 
     <!-- Sign Up Button -->
     <Button
@@ -80,7 +84,7 @@
     <TextView
         android:id="@+id/sign_in_link"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/timeless_memories_regular"
         android:gravity="center"
