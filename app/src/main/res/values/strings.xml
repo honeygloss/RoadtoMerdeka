@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">RoadtoMerdeka</string>
+    <string name="app_name">Road to Merdeka</string>
+    <string name="register_text">Register</string>
+    <string name="login_text">Login</string>
+    <string name="username_text">Username</string>
+    <string name="login_field">Enter username or email</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+    <string name="confirmpass_text">Confirm Password</string>
+    <string name="username_field">Enter your username</string>
+    <string name="email_field">Enter your email</string>
+    <string name="password_field">Enter your password</string>
+    <string name="confirmpass_field">Confirm Password</string>
+    <string name="signup_text">Sign Up</string>
+    <string name="signin_redirect">Already have an account? Sign In</string>
+    <string name="signup_redirect">Dont have an account? Sign Up</string>
 </resources>
