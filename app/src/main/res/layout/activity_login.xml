@@ -8,19 +8,17 @@
     android:padding="16dp"
     tools:context=".LoginActivity">
 
-    <!-- Title -->
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_width="240dp"
+        android:layout_height="221dp"
         android:fontFamily="@font/caprasimo"
         android:gravity="center"
-        android:text="Road to Merdeka"
+        android:text="Road\nto\nMerdeka"
         android:textColor="@color/blue"
         android:textSize="50sp"
         android:textStyle="bold" />
+
     <!-- Username Label -->
     <TextView
         android:id="@+id/label_username"

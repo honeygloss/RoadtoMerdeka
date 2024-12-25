@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/Merdeka"
+    android:background="@color/grey"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
@@ -30,7 +30,7 @@
         android:fontFamily="@font/TimelessMemoriesRegular"
         android:textColor="@color/black"
         android:gravity="start"
-        android:text="Username"
+        android:text="@string/username_text"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/TimelessMemoriesRegular"
-        android:hint="Enter username"
+        android:text="@string/username_field"
         android:padding="12dp" />
 
     <!-- Email Label -->
@@ -53,7 +53,7 @@
         android:fontFamily="@font/TimelessMemoriesRegular"
         android:textColor="@color/black"
         android:gravity="start"
-        android:text="Email"
+        android:text="@string/email_text"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/TimelessMemoriesRegular"
-        android:hint="Enter email"
+        android:hint="@string/email_field"
         android:padding="12dp" />
 
     <!-- Password Label -->
@@ -76,7 +76,7 @@
         android:fontFamily="@font/TimelessMemoriesRegular"
         android:textColor="@color/black"
         android:gravity="start"
-        android:text="Password"
+        android:text="@string/password_text"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/TimelessMemoriesRegular"
-        android:hint="Enter password"
+        android:hint="@string/password_field"
         android:padding="12dp" />
 
     <!-- Confirm Password Label -->
@@ -99,7 +99,7 @@
         android:fontFamily="@font/TimelessMemoriesRegular"
         android:textColor="@color/black"
         android:gravity="start"
-        android:text="Confirm Password"
+        android:text="@string/confirmpass_text"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/TimelessMemoriesRegular"
-        android:hint="Confirm password"
+        android:text="@string/confirmpass_field"
         android:padding="12dp" />
 
     <!-- Sign Up Button -->
@@ -120,9 +120,10 @@
         android:layout_height="58dp"
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/blue"
+        android:textColor="@color/grey"
         android:fontFamily="@font/caprasimo"
         android:gravity="center"
-        android:text="Sign Up"
+        android:text="@string/signup_text"
         android:textSize="20sp" />
 
     <TextView
