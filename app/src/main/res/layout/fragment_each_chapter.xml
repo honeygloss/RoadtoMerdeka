@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bordered_background"
+    android:padding="20dp">
+
+    <!-- Chapter Image -->
+    <ImageView
+        android:id="@+id/chapter_image"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/chapter_image_desc" />
+
+    <!-- Chapter Title -->
+    <TextView
+        android:id="@+id/chapter_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chapter Title"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/caprasimo_regular"
+        android:paddingTop="16dp" />
+
+    <!-- Chapter Description -->
+    <TextView
+        android:id="@+id/chapter_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/timeless_memories_regular"
+        android:paddingTop="8dp"
+        android:text="Chapter Description"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+</LinearLayout>

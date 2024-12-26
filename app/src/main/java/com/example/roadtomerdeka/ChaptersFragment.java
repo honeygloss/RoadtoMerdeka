@@ -1,7 +1,11 @@
 package com.example.roadtomerdeka;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,34 +24,26 @@ public class ChaptersFragment extends Fragment {
     private List<Chapter> chapterList;
     private DatabaseReference databaseReference;
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Initialize Firebase Database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Chapters");
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chapters, container, false);
 
+        // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view_chapters);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // Initialize list and adapter
         chapterList = new ArrayList<>();
-        chapterAdapter = new ChapterAdapter(chapterList, position -> {
-            // Handle chapter click logic
-            if (!chapterList.get(position).isLocked()) {
-                // Navigate to the corresponding chapter fragment if the chapter is not locked
-                Navigation.findNavController(view).navigate(R.id.action_chaptersFragment_to_chapterDetailFragment);
-            }
-        });
-
+        chapterAdapter = new ChapterAdapter(chapterList);
         recyclerView.setAdapter(chapterAdapter);
 
-        fetchChapters(); // Call method to fetch chapters from Firebase
+        // Initialize Firebase reference
+        databaseReference = FirebaseDatabase.getInstance().getReference("chapters");
+
+        // Fetch chapters
+        fetchChapters();
 
         return view;
     }
@@ -56,21 +52,21 @@ public class ChaptersFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                chapterList.clear(); // Clear existing data
+                chapterList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Chapter chapter = dataSnapshot.getValue(Chapter.class);
                     if (chapter != null) {
                         chapterList.add(chapter);
                     }
                 }
-                chapterAdapter.notifyDataSetChanged(); // Notify the adapter
+                chapterAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle database errors if any
+                // Handle errors here
             }
         });
     }
-}
 
+}

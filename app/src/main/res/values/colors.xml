@@ -4,4 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#061C7E</color>
     <color name="grey">#BCBFCC</color>
+    <color name="palette_color_1">#EB0404</color>
+    <color name="palette_color_2">#E9ED0B</color>
+    <color name="palette_color_3">#0B2FED</color>
+    <color name="palette_color_4">#E1DBED</color>
+    <color name="beige">#F2E5D4</color>
+    <color name="light_grey">#E0E0E0</color>
+
 </resources>
