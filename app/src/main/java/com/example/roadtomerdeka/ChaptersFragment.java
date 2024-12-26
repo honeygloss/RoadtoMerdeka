@@ -1,64 +1,76 @@
 package com.example.roadtomerdeka;
 
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChaptersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ChaptersFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ChaptersFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChaptersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChaptersFragment newInstance(String param1, String param2) {
-        ChaptersFragment fragment = new ChaptersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private RecyclerView recyclerView;
+    private ChapterAdapter chapterAdapter;
+    private List<Chapter> chapterList;
+    private DatabaseReference databaseReference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        // Initialize Firebase Database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Chapters");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chapters, container, false);
+        View view = inflater.inflate(R.layout.fragment_chapters, container, false);
+
+        recyclerView = view.findViewById(R.id.recycler_view_chapters);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        chapterList = new ArrayList<>();
+        chapterAdapter = new ChapterAdapter(chapterList, position -> {
+            // Handle chapter click logic
+            if (!chapterList.get(position).isLocked()) {
+                // Navigate to the corresponding chapter fragment if the chapter is not locked
+                Navigation.findNavController(view).navigate(R.id.action_chaptersFragment_to_chapterDetailFragment);
+            }
+        });
+
+        recyclerView.setAdapter(chapterAdapter);
+
+        fetchChapters(); // Call method to fetch chapters from Firebase
+
+        return view;
+    }
+
+    private void fetchChapters() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chapterList.clear(); // Clear existing data
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Chapter chapter = dataSnapshot.getValue(Chapter.class);
+                    if (chapter != null) {
+                        chapterList.add(chapter);
+                    }
+                }
+                chapterAdapter.notifyDataSetChanged(); // Notify the adapter
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle database errors if any
+            }
+        });
     }
 }
+

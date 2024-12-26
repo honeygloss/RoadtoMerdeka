@@ -1,18 +1,124 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:background="@color/grey">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Profile Title (Not Centered) -->
     <TextView
+        android:id="@+id/profile_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Us Fragment"
-        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/caprasimo_regular"
+        android:text="Profile"
+        android:textColor="@color/blue"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <!-- Container for Centered Content -->
+    <LinearLayout
+        android:id="@+id/centered_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@color/blue"/>
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Name Label -->
+        <TextView
+            android:id="@+id/label_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/username_text"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Name Value -->
+        <EditText
+            android:id="@+id/value_name"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/username_text"
+            android:enabled="false"
+            android:background="@color/white"
+            android:padding="12dp" />
+
+        <!-- Email Label -->
+        <TextView
+            android:id="@+id/label_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/email_text"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Email Value -->
+        <EditText
+            android:id="@+id/input_email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/email_text"
+            android:enabled="false"
+            android:background="@color/white"
+            android:padding="12dp" />
+
+        <!-- Password Label -->
+        <TextView
+            android:id="@+id/label_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Password"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Password Value -->
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="xxxxxxxx"
+            android:enabled="false"
+            android:background="@color/white"
+            android:padding="12dp" />
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/blue"
+            android:text="Save"
+            android:fontFamily="@font/caprasimo_regular"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/edit_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/edit"
+        android:contentDescription="Edit Profile" />
+
 
 </RelativeLayout>
+

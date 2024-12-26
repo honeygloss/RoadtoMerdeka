@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -18,15 +17,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/username_text"
+        android:fontFamily="@font/timeless_memories_regular"
         android:textColor="@color/white"
         android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/timeless_memories_regular"
         android:text="chapter xx"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:layout_marginBottom="16dp"/>
-
 </LinearLayout>
