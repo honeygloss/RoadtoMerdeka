@@ -6,13 +6,115 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Circular Logo at the Top Right -->
+    <ImageView
+        android:id="@+id/circular_logo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/logo"
+        android:scaleType="centerCrop" />
+
+    <!-- Container for the app name text and background image -->
+    <RelativeLayout
+        android:id="@+id/app_name_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/blue"/>
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+       >
 
+        <!-- Background image with reduced opacity -->
+        <ImageView
+            android:id="@+id/app_name_background"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:src="@drawable/bendera"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:alpha="0.3" />
+
+        <!-- Welcome Text (App Name) -->
+        <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="30sp"
+            android:fontFamily="@font/caprasimo_regular"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
+    <!-- Large Box with Description Text -->
+    <RelativeLayout
+        android:id="@+id/large_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_name_container"
+        android:layout_marginTop="12dp"
+        android:padding="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/palette_color_1">
+
+        <!-- Description Text -->
+        <TextView
+            android:id="@+id/description_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/desc"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:justificationMode="inter_word"
+            android:lineSpacingExtra="4dp"/>
+    </RelativeLayout>
+
+    <!-- Two Boxes Side by Side -->
+    <LinearLayout
+        android:id="@+id/two_boxes_container"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@id/large_box"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <!-- Left Blue Box with Text -->
+        <TextView
+            android:id="@+id/left_box"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/blue"
+            android:text="Read by Chapter"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/caprasimo_regular"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Right Grey Box with Text -->
+        <TextView
+            android:id="@+id/right_box"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/palette_color_2"
+            android:text="Take a Quiz"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/caprasimo_regular"
+            android:gravity="center"
+            android:padding="10dp"/>
+    </LinearLayout>
 </RelativeLayout>

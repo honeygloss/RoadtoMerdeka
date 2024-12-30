@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Redirect to Home Activity
-                Intent intent = new Intent(LoginActivity.this, Home.class);
+                Intent intent = new Intent(LoginActivity.this, HomeFragment.class);
                 startActivity(intent);
                 finish(); // Optional: to close the LoginActivity
             }
