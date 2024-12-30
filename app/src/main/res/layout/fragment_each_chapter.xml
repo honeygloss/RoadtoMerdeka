@@ -36,4 +36,29 @@
         android:text="Chapter Description"
         android:textColor="@color/black"
         android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/quiz_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/quizzes" />
+
+        <TextView
+            android:id="@+id/take_quiz_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:text="Take a Quiz"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:textColor="@color/blue"
+            android:textSize="16sp" />
+    </LinearLayout>
+
 </LinearLayout>
+
