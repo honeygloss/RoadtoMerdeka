@@ -1,153 +1,167 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/caprasimo_regular"
+    <!-- Background Image with lower opacity -->
+    <ImageView
+        android:id="@+id/background1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background2"
+        android:scaleType="centerCrop"
+        android:alpha="0.3" />
+
+    <!-- Form and UI components inside LinearLayout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
         android:gravity="center"
-        android:text="@string/register_text"
-        android:textColor="@color/blue"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"> <!-- Ensure the background is transparent -->
 
-    <!-- Username Label -->
-    <TextView
-        android:id="@+id/label_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:textColor="@color/black"
-        android:gravity="start"
-        android:text="@string/username_text"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <!-- Title -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/caprasimo_regular"
+            android:gravity="center"
+            android:text="@string/register_text"
+            android:textColor="@color/blue"
+            android:textSize="50sp"
+            android:textStyle="bold" />
 
-    <!-- Username Input -->
-    <EditText
-        android:id="@+id/input_username"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:hint="@string/username_field"
-        android:padding="12dp" />
+        <!-- Username Label -->
+        <TextView
+            android:id="@+id/label_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:textColor="@color/black"
+            android:gravity="start"
+            android:text="@string/username_text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <!-- Email Label -->
-    <TextView
-        android:id="@+id/label_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:textColor="@color/black"
-        android:gravity="start"
-        android:text="@string/email_text"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        />
+        <!-- Username Input -->
+        <EditText
+            android:id="@+id/input_username"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:hint="@string/username_field"
+            android:padding="12dp" />
 
-    <!-- Email Input -->
-    <EditText
-        android:id="@+id/input_email"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:hint="@string/email_field"
-        android:padding="12dp"
-        android:inputType="textEmailAddress"
-        android:autofillHints="emailAddress"/>
+        <!-- Email Label -->
+        <TextView
+            android:id="@+id/label_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:textColor="@color/black"
+            android:gravity="start"
+            android:text="@string/email_text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <!-- Password Label -->
-    <TextView
-        android:id="@+id/label_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:textColor="@color/black"
-        android:gravity="start"
-        android:text="@string/password_text"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/input_email"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:hint="@string/email_field"
+            android:padding="12dp"
+            android:inputType="textEmailAddress"
+            android:autofillHints="emailAddress"/>
 
-    <!-- Password Input -->
-    <EditText
-        android:id="@+id/input_password"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:hint="@string/password_field"
-        android:padding="12dp"
-        android:inputType="textPassword"
-        android:autofillHints="password"/>
+        <!-- Password Label -->
+        <TextView
+            android:id="@+id/label_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:textColor="@color/black"
+            android:gravity="start"
+            android:text="@string/password_text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <!-- Confirm Password Label -->
-    <TextView
-        android:id="@+id/label_password2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:textColor="@color/black"
-        android:gravity="start"
-        android:text="@string/confirmpass_text"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <!-- Password Input -->
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:hint="@string/password_field"
+            android:padding="12dp"
+            android:inputType="textPassword"
+            android:autofillHints="password"/>
 
-    <!-- Confirm Password Input -->
-    <EditText
-        android:id="@+id/input_password2"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:hint="@string/confirmpass_field"
-        android:padding="12dp"
-        android:inputType="textPassword"
-        android:autofillHints="password"/>
+        <!-- Confirm Password Label -->
+        <TextView
+            android:id="@+id/label_password2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:textColor="@color/black"
+            android:gravity="start"
+            android:text="@string/confirmpass_text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <!-- Sign Up Button -->
-    <Button
-        android:id="@+id/button"
-        android:layout_width="260dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/blue"
-        android:textColor="@color/grey"
-        android:fontFamily="@font/caprasimo_regular"
-        android:gravity="center"
-        android:text="@string/signup_text"
-        android:textSize="20sp" />
+        <!-- Confirm Password Input -->
+        <EditText
+            android:id="@+id/input_password2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:hint="@string/confirmpass_field"
+            android:padding="12dp"
+            android:inputType="textPassword"
+            android:autofillHints="password"/>
 
-    <TextView
-        android:id="@+id/sign_in_link"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:gravity="center"
-        android:text="@string/signin_redirect"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="8dp" />
+        <!-- Sign Up Button -->
+        <Button
+            android:id="@+id/button"
+            android:layout_width="260dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="@color/blue"
+            android:textColor="@color/grey"
+            android:fontFamily="@font/caprasimo_regular"
+            android:gravity="center"
+            android:text="@string/signup_text"
+            android:textSize="20sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/sign_in_link"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:gravity="center"
+            android:text="@string/signin_redirect"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp" />
+    </LinearLayout>
+</FrameLayout>
 
 
 

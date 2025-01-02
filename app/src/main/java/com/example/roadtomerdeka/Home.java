@@ -49,7 +49,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         if (id == R.id.nav_home) {
             // Redirect to HomeActivity
-            Intent intent = new Intent(Home.this, Home.class);
+            Intent intent = new Intent(Home.this, HomeFragment.class);
             startActivity(intent);
         } else if (id == R.id.nav_user) {
             getSupportFragmentManager().beginTransaction()

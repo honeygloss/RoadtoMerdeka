@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:cardElevation="4dp"
+    android:radius="20dp"
+    android:background="@android:color/white"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Chapter Header Title -->
+        <TextView
+            android:id="@+id/text_quiz_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/quizzes_num"
+            android:textSize="30sp"
+            android:fontFamily="@font/caprasimo_regular"
+            android:textColor="@color/black"
+            android:paddingLeft="15dp" />
+
+        <!-- Frame Layout Container -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <!-- Abdul Rahman's Image Positioned to Overlay Above the FrameLayout -->
+            <ImageView
+                android:id="@+id/image_array"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/arrow_scaled"
+                android:layout_marginTop="-5dp"
+                android:layout_gravity="end" />
+
+            <!-- Content Container -->
+            <LinearLayout
+                android:id="@+id/chapter_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="15dp"
+                android:padding="25dp">
+
+                <!-- Chapter Title Inside the Content -->
+                <TextView
+                    android:id="@+id/text_Quiz_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quiz Title"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/caprasimo_regular"
+                    android:textColor="@color/black"
+                    android:paddingBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/text_chapter_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Take your quiz"
+                    android:fontFamily="@font/timeless_memories_regular"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:paddingTop="4dp"/>
+            </LinearLayout>
+
+            <!-- Lock Icon -->
+            <ImageView
+                android:id="@+id/image_chapter_lock"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/lock"
+                android:visibility="gone"
+                android:layout_gravity="end|center_vertical"
+                android:padding="8dp" />
+
+            <!-- Blur Overlay -->
+            <View
+                android:id="@+id/blur_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80FFFFFF"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -7,14 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".ChaptersFragment">
 
+    <TextView
+        android:id="@+id/text_chapter_headline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/caprasimo_regular"
+        android:paddingLeft="15dp"
+        android:text="@string/chapters_headline"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_chapters"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="16dp"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@id/text_chapter_headline"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
 

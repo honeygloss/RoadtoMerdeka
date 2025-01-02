@@ -2,22 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="240dp"
-        android:layout_height="221dp"
-        android:fontFamily="@font/caprasimo_regular"
-        android:gravity="center"
-        android:text="Road\nto\nMerdeka"
-        android:textColor="@color/blue"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/app_name"
+        android:layout_gravity="center"/>
 
     <!-- Username Label -->
     <TextView

@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Road to Merdeka</string>
+    <string name="app_name">Road\nto\nMerdeka</string>
+    <string name="desc">“Merdeka” is a Malay word referring to Malaysia Independence Day, a day of immense pride and historical significance. Decades of conflict, discussions, and sacrifices by Malaysian leaders and warriors characterized the countrys path to independence. The journey towards 31 August 1957 is a history that is written as a significant event. By studying this important period, one feels an appreciation to Malaysian roots and also the solidarity with the hardships and victories that led to the formation of the nation.</string>
     <string name="register_text">Register</string>
     <string name="login_text">Login</string>
     <string name="username_text">Username</string>
@@ -17,7 +18,9 @@
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
     <string name="chapter_num">Chapter</string>
-    <string name="chapter_image_desc">Image representing the chapter</string>
+    <string name="quizzes_num">Quiz</string>
+    <string name="quizzes_headline">Quizzes</string>
+    <string name="chapters_headline">Quizzes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
