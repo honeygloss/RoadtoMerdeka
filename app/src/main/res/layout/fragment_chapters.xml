@@ -13,8 +13,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="16dp"
-        app:layout_centerInParent="true"
-        app:layout_marginTop="16dp" />
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>
 

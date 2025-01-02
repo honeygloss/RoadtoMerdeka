@@ -9,7 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -82,7 +85,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         // Replace the current fragment with the ChapterFragment
-        ChapterFragment chapterFragment = ChapterFragment.newInstance(chapterId);
+        ChaptersFragment chapterFragment = ChaptersFragment.newInstance(chapterId);
         transaction.replace(R.id.fragment_container, chapterFragment);
         transaction.addToBackStack(null);
         transaction.commit();

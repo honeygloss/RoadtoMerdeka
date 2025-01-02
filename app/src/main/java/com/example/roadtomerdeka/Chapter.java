@@ -1,12 +1,14 @@
 package com.example.roadtomerdeka;
 public class Chapter {
+    private int id;
     private String title;
     private String description;
     private int imageResId;
     private boolean isLocked;
 
     // Constructor
-    public Chapter(String title, String description, int imageResId, boolean isLocked) {
+    public Chapter(int id, String title, String description, int imageResId, boolean isLocked) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.imageResId = imageResId;
@@ -14,6 +16,7 @@ public class Chapter {
     }
 
     // Getters
+    public int getId() { return id; }
     public String getTitle() {
         return title;
     }

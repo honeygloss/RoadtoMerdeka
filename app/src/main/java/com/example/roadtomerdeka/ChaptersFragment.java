@@ -19,10 +19,19 @@ import java.util.List;
 
 public class ChaptersFragment extends Fragment {
 
+    private static final String ARG_CHAPTER_ID = "chapter_id";
     private RecyclerView recyclerView;
     private ChapterAdapter chapterAdapter;
     private List<Chapter> chapterList;
     private DatabaseReference databaseReference;
+
+    public static ChaptersFragment newInstance(int chapterId) {
+        ChaptersFragment fragment = new ChaptersFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_CHAPTER_ID, chapterId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -67,6 +76,16 @@ public class ChaptersFragment extends Fragment {
                 // Handle errors here
             }
         });
+    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Retrieve chapterId if passed as an argument
+        if (getArguments() != null) {
+            int chapterId = getArguments().getInt(ARG_CHAPTER_ID);
+            // Use chapterId if needed
+        }
     }
 
 }
