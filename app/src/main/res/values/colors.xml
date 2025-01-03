@@ -10,5 +10,7 @@
     <color name="palette_color_4">#E1DBED</color>
     <color name="beige">#F2E5D4</color>
     <color name="light_grey">#E0E0E0</color>
+    <color name="ic_launcher_background">#FFFFFF</color> <!-- Replace #FFFFFF with your desired background color -->
+
 
 </resources>

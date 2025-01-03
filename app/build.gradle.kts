@@ -47,7 +47,12 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.analytics)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation ("com.google.firebase:firebase-analytics:22.1.2")
+    implementation ("com.google.firebase:firebase-auth:23.1.0")
+    implementation ("com.google.firebase:firebase-database:21.0.0")
 }
+apply (plugin="com.google.gms.google-services")
