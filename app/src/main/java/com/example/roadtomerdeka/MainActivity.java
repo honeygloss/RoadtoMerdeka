@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonRegister;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase db;
     private DatabaseReference databaseReference;
     private TextView signInLink;
 
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         signInLink = findViewById(R.id.sign_in_link);
 
         // Initialize Firebase Database Reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        db = FirebaseDatabase.getInstance("https://roadtomerdeka-6a28d-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        databaseReference = db.getReference("users");
 
         // Full text
         String fullText = "Already have an account? Sign In";
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-// Set the spannable text on the TextView
+        // Set the spannable text on the TextView
         signInLink.setText(spannableString);
         signInLink.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -132,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void registerUser(String email, String password, String username) {
+    private void registerUser(String username, String email, String password) {
         progressBar.setVisibility(View.VISIBLE);
 
-        mAuth.createUserWithEmailAndPassword(email, username)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     progressBar.setVisibility(View.GONE);
 
