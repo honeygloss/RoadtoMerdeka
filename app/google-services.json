@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "503388079364",
+    "project_id": "csc557project-2413a",
+    "storage_bucket": "csc557project-2413a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503388079364:android:38f42a4eec3c128412fc51",
+        "android_client_info": {
+          "package_name": "com.example.roadtomerdeka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503388079364-nf20sims5fmc9fk17tci3vauiqnphtr3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_NNZtXxtYKotz-iLaOJyMN09nFOQ7fXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503388079364-nf20sims5fmc9fk17tci3vauiqnphtr3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
