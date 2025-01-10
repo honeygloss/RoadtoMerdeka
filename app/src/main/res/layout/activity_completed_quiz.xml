@@ -77,7 +77,7 @@
             android:id="@+id/quiz_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/quizzes" />
+            android:src="@drawable/book" />
 
         <TextView
             android:id="@+id/take_quiz_text"
@@ -86,7 +86,7 @@
             android:paddingStart="10dp"
             android:text="Continue your journey !"
             android:fontFamily="@font/timeless_memories_regular"
-            android:textColor="@color/blue"
+            android:textColor="@color/blue3"
             android:textSize="16sp" />
     </LinearLayout>
 
