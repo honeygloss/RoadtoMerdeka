@@ -10,9 +10,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.roadtomerdeka" />
-                  <option name="mobileSdkAppId" value="1:358851732942:android:26dcdc3c1cede3fecaf79f" />
-                  <option name="projectId" value="roadtomerdeka" />
-                  <option name="projectNumber" value="358851732942" />
+                  <option name="mobileSdkAppId" value="1:503388079364:android:38f42a4eec3c128412fc51" />
+                  <option name="projectId" value="csc557project-2413a" />
+                  <option name="projectNumber" value="503388079364" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

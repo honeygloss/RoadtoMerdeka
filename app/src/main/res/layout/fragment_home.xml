@@ -1,108 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    >
 
-    <!-- Container for the app name text and background image -->
-    <RelativeLayout
-        android:id="@+id/app_name_container"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
-       >
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
 
-        <!-- Background image with reduced opacity -->
-        <ImageView
-            android:id="@+id/app_name_background"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/bendera"
-            android:layout_centerInParent="true"
-            android:scaleType="centerCrop"
-            android:alpha="0.3" />
-
-        <!-- Welcome Text (App Name) -->
+        <!-- Welcome Section -->
         <TextView
             android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="30sp"
-            android:fontFamily="@font/caprasimo_regular"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_centerInParent="true"
-            android:layout_alignParentTop="true" />
-    </RelativeLayout>
+            android:text="Welcome back, Elvie"
+            android:textSize="16sp"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:textColor="@color/dark_grey"
+            android:layout_marginBottom="8dp" />
 
-    <!-- Large Box with Description Text -->
-    <RelativeLayout
-        android:id="@+id/large_box"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/app_name_container"
-        android:layout_marginTop="12dp"
-        android:padding="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/palette_color_1">
-
-        <!-- Description Text -->
         <TextView
-            android:id="@+id/description_text"
+            android:id="@+id/play_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/desc"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            android:justificationMode="inter_word"
-            android:lineSpacingExtra="4dp"/>
-    </RelativeLayout>
-
-    <!-- Two Boxes Side by Side -->
-    <LinearLayout
-        android:id="@+id/two_boxes_container"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_below="@id/large_box"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal">
-
-        <!-- Left Blue Box with Text -->
-        <TextView
-            android:id="@+id/left_box"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/blue"
-            android:text="Read by Chapter"
-            android:textSize="16sp"
-            android:textColor="@color/white"
+            android:text="Let’s play!"
+            android:textSize="32sp"
             android:fontFamily="@font/caprasimo_regular"
-            android:gravity="center"
-            android:padding="10dp"
-            android:layout_marginEnd="8dp"/>
+            android:textColor="@color/blue"
+            android:textStyle="bold" />
 
-        <!-- Right Grey Box with Text -->
+        <!-- Streak Progress -->
+        <RelativeLayout
+            android:id="@+id/rounded_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background"
+            android:padding="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp">
+
+            <!-- Content in the LinearLayout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true">
+
+                <!-- Score Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80 scores"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/timeless_memories_regular"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:progress="30"
+                android:max="100"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:progressTint="@color/blue2"
+                style="?android:attr/progressBarStyleHorizontal" />
+
+            <!-- Coin Icon -->
+            <ImageView
+                android:id="@+id/coin_icon"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/coin"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="Coin Icon" />
+        </RelativeLayout>
+
+        <!-- Quiz of the Week -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_background2"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp">
+
+            <!-- Title Text -->
+            <TextView
+                android:id="@+id/quiz_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You're on"
+                android:textSize="16sp"
+                android:textColor="@color/blue"
+                android:layout_alignParentTop="true" />
+
+            <!-- Chapter Text -->
+            <TextView
+                android:id="@+id/quiz_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chapter xx"
+                android:fontFamily="@font/caprasimo_regular"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:layout_below="@id/quiz_title"
+                android:layout_marginTop="8dp" />
+
+            <!-- Button -->
+            <Button
+                android:id="@+id/play_now_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Continue reading"
+                android:fontFamily="@font/caprasimo_regular"
+                android:backgroundTint="@color/blue"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:layout_below="@id/quiz_name"
+                android:layout_marginTop="16dp"
+                />
+            <!-- Coin Icon -->
+            <ImageView
+                android:id="@+id/book_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/book"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="Coin Icon" />
+        </RelativeLayout>
+
+        <!-- Categories Section -->
         <TextView
-            android:id="@+id/right_box"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/palette_color_2"
-            android:text="Take a Quiz"
-            android:textSize="16sp"
-            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categories"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:fontFamily="@font/caprasimo_regular"
-            android:gravity="center"
-            android:padding="10dp"/>
+            android:textColor="@color/blue"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/rounded_background"
+                android:layout_margin="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/chapters"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chapter"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/caprasimo_regular"
+                    android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/rounded_background"
+                android:layout_margin="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/quizzes"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quiz"
+                    android:fontFamily="@font/caprasimo_regular"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </GridLayout>
     </LinearLayout>
-</RelativeLayout>
+</ScrollView>
