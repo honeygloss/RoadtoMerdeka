@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "358851732942",
+    "project_id": "roadtomerdeka",
+    "storage_bucket": "roadtomerdeka.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358851732942:android:26dcdc3c1cede3fecaf79f",
+        "android_client_info": {
+          "package_name": "com.example.roadtomerdeka"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzq1ePmRldbl5BXrmhHGndVwEbfwkGfpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
