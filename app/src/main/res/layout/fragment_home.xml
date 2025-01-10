@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- Circular Logo at the Top Right -->
-    <ImageView
-        android:id="@+id/circular_logo"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/logo"
-        android:scaleType="centerCrop" />
-
     <!-- Container for the app name text and background image -->
     <RelativeLayout
         android:id="@+id/app_name_container"
@@ -25,14 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
        >
 
         <!-- Background image with reduced opacity -->
         <ImageView
             android:id="@+id/app_name_background"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:src="@drawable/bendera"
             android:layout_centerInParent="true"
             android:scaleType="centerCrop"

@@ -3,14 +3,19 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#061C7E</color>
+    <color name="blue2">#004aad</color>
     <color name="grey">#BCBFCC</color>
     <color name="palette_color_1">#FF0606</color>
-    <color name="palette_color_2">#E9ED0B</color>
+    <color name="palette_color_2">#FFEB3B</color>
     <color name="palette_color_3">#0B2FED</color>
     <color name="palette_color_4">#E1DBED</color>
     <color name="beige">#F2E5D4</color>
     <color name="light_grey">#E0E0E0</color>
     <color name="ic_launcher_background">#FFFFFF</color> <!-- Replace #FFFFFF with your desired background color -->
+    <color name="orange">#FF5722</color>
+    <color name="green">#3bac40</color>
+    <color name="red">#e02517</color>
+    <color name="dark_grey">#B8ADAD</color>
 
 
 </resources>

@@ -50,6 +50,8 @@
             android:textStyle="bold" />
 
         <!-- Username Input -->
+
+        <!-- Email Label -->
         <EditText
             android:id="@+id/input_username"
             android:layout_width="match_parent"
@@ -59,7 +61,6 @@
             android:hint="@string/username_field"
             android:padding="12dp" />
 
-        <!-- Email Label -->
         <TextView
             android:id="@+id/label_email"
             android:layout_width="wrap_content"

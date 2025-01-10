@@ -13,6 +13,7 @@
     <string name="password_field">Enter your password</string>
     <string name="confirmpass_field">Confirm Password</string>
     <string name="signup_text">Sign Up</string>
+    <string name="signin_text">Sign In</string>
     <string name="signin_redirect">Already have an account? Sign In</string>
     <string name="signup_redirect">Dont have an account? Sign Up</string>
     <string name="open_nav">Open Navigation Drawer</string>
@@ -22,6 +23,7 @@
     <string name="quizzes_headline">Quizzes</string>
     <string name="chapters_headline">Quizzes</string>
     <string name="chapter_image_desc">Image representing the chapter</string>
+    <string name="quotes">History to independence</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

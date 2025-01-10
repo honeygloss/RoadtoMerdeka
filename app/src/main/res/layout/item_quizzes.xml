@@ -4,40 +4,49 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="4dp"
-    android:radius="20dp"
-    android:background="@android:color/white"
-    android:layout_margin="8dp">
+    app:cardElevation="0dp"
+    android:radius="0dp"
+    android:layout_margin="8dp"
+    android:background="@android:color/transparent"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@android:color/transparent"
+        >
 
         <!-- Chapter Header Title -->
+
+        <!-- Frame Layout Container randomize coloe-->
+
         <TextView
             android:id="@+id/text_quiz_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/quizzes_num"
-            android:textSize="30sp"
             android:fontFamily="@font/caprasimo_regular"
+            android:paddingLeft="20dp"
+            android:text="@string/quizzes_num"
             android:textColor="@color/black"
-            android:paddingLeft="15dp" />
+            android:textSize="20sp"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"/>
 
-        <!-- Frame Layout Container -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="150dp"
+            android:id="@+id/frameLayout"
+            android:background="@drawable/rounded_corners">
 
-            <!-- Abdul Rahman's Image Positioned to Overlay Above the FrameLayout -->
+            <!-- random Image Positioned to Overlay Above the FrameLayout -->
             <ImageView
                 android:id="@+id/image_array"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:src="@drawable/arrow_scaled"
                 android:layout_marginTop="-5dp"
-                android:layout_gravity="end" />
+                android:layout_gravity="end"/>
 
             <!-- Content Container -->
             <LinearLayout
@@ -56,8 +65,9 @@
                     android:text="Quiz Title"
                     android:textSize="20sp"
                     android:fontFamily="@font/caprasimo_regular"
-                    android:textColor="@color/black"
-                    android:paddingBottom="4dp" />
+                    android:textColor="@color/white"
+                    android:paddingBottom="4dp"
+                    android:layout_marginEnd="70dp"/>
 
                 <TextView
                     android:id="@+id/text_chapter_desc"
@@ -66,27 +76,28 @@
                     android:text="Take your quiz"
                     android:fontFamily="@font/timeless_memories_regular"
                     android:textSize="15sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:paddingTop="4dp"/>
             </LinearLayout>
 
             <!-- Lock Icon -->
             <ImageView
                 android:id="@+id/image_chapter_lock"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/lock"
-                android:visibility="gone"
-                android:layout_gravity="end|center_vertical"
-                android:padding="8dp" />
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:visibility="gone"/>
 
             <!-- Blur Overlay -->
             <View
                 android:id="@+id/blur_overlay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#80FFFFFF"
-                android:visibility="gone" />
+                android:background="#B4FFFFFF"
+                android:visibility="gone"/>
         </FrameLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

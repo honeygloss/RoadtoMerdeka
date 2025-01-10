@@ -3,9 +3,9 @@
     <item>
         <bitmap
             android:src="@drawable/quizzes"
-        android:gravity="center"
-        android:width="10dp"
-        android:height="10dp"
-        android:tileMode="disabled" />
+            android:gravity="center"
+            android:width="10dp"
+            android:height="10dp"
+            android:tileMode="disabled" />
     </item>
 </layer-list>
