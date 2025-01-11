@@ -125,7 +125,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
 
         // Redirect to LoginActivity
-        Intent intent = new Intent(Home.this, LoginActivity.class);
+        Intent intent = new Intent(Home.this, LandingPage.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
         startActivity(intent);
         finish(); // Close the current activity

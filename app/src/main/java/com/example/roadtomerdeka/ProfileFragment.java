@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,11 +26,15 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileFragment extends Fragment {
 
     private EditText valueName, inputEmail, inputPassword;
+    private TextView usernameText;
     private ImageButton editButton;
-    private Button saveButton;
+    private Button saveButton, cancelButton;
+    private ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
+
+    private String actualPassword = ""; // Store the real password
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,23 +52,34 @@ public class ProfileFragment extends Fragment {
         }
 
         // Initialize UI components
-        valueName = view.findViewById(R.id.value_name);
+        valueName = view.findViewById(R.id.value_name); // Username field
         inputEmail = view.findViewById(R.id.input_email);
         inputPassword = view.findViewById(R.id.input_password);
+        usernameText = view.findViewById(R.id.username_text);
         editButton = view.findViewById(R.id.edit_button);
         saveButton = view.findViewById(R.id.save_button);
+        cancelButton = view.findViewById(R.id.cancel_button);
+        progressBar = view.findViewById(R.id.progress_bar);
 
-        // Set initial state to non-editable
+        // Set initial state
         setEditable(false);
+        saveButton.setVisibility(View.GONE);
+        cancelButton.setVisibility(View.GONE);
+
+        // Show progress bar until data loads
+        progressBar.setVisibility(View.VISIBLE);
+        view.findViewById(R.id.main_content).setVisibility(View.GONE);
 
         // Load user data
         loadUserData();
 
-        // Edit button toggle logic
+        // Edit button logic
         editButton.setOnClickListener(v -> {
-            boolean isEditable = valueName.isEnabled();
-            setEditable(!isEditable);
-            saveButton.setVisibility(isEditable ? View.GONE : View.VISIBLE);
+            setEditable(true);
+            inputPassword.setText(actualPassword); // Show actual password for editing
+            editButton.setVisibility(View.GONE);
+            saveButton.setVisibility(View.VISIBLE);
+            cancelButton.setVisibility(View.VISIBLE);
         });
 
         // Save button logic
@@ -71,8 +88,19 @@ public class ProfileFragment extends Fragment {
                 saveProfileData();
                 setEditable(false);
                 saveButton.setVisibility(View.GONE);
+                cancelButton.setVisibility(View.GONE);
+                editButton.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(), "Profile updated successfully!", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        // Cancel button logic
+        cancelButton.setOnClickListener(v -> {
+            setEditable(false);
+            loadUserData(); // Reload original data
+            saveButton.setVisibility(View.GONE);
+            cancelButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.VISIBLE);
         });
 
         return view;
@@ -82,21 +110,28 @@ public class ProfileFragment extends Fragment {
     private void loadUserData() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            // Display basic data from FirebaseAuth
-            inputEmail.setText(currentUser.getEmail());
-
-            // Fetch additional data from the database
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        String name = snapshot.child("username").getValue(String.class);
-                        String password = snapshot.child("password").getValue(String.class); // Assuming passwords are stored (not recommended)
+                        String username = snapshot.child("username").getValue(String.class);
+                        String password = snapshot.child("password").getValue(String.class);
 
-                        valueName.setText(name);
-                        inputPassword.setText("********"); // Mask the password for security
+                        if (username != null) {
+                            usernameText.setText("@" + username); // Display username
+                            valueName.setText(username); // Set in editable field
+                        }
+
+                        if (password != null) {
+                            actualPassword = password; // Store the real password
+                            inputPassword.setText(maskPassword(password.length())); // Display masked password
+                        }
+
+                        // Hide progress bar and show content
+                        progressBar.setVisibility(View.GONE);
+                        getView().findViewById(R.id.main_content).setVisibility(View.VISIBLE);
                     } else {
-                        Toast.makeText(getActivity(), "No additional profile data found!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "No profile data found.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -108,32 +143,41 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    // Creates a masked password based on the length of the original password
+    private String maskPassword(int length) {
+        StringBuilder maskedPassword = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            maskedPassword.append("*");
+        }
+        return maskedPassword.toString();
+    }
+
     // Enables or disables editing of profile fields
     private void setEditable(boolean isEditable) {
         valueName.setEnabled(isEditable);
-        inputEmail.setEnabled(false); // Email should not be editable
         inputPassword.setEnabled(isEditable);
     }
 
     // Saves updated profile data to Firebase
     private void saveProfileData() {
-        String name = valueName.getText().toString();
+        String username = valueName.getText().toString().trim();
         String password = inputPassword.getText().toString();
 
-        // Update the data in the database
-        userRef.child("username").setValue(name);
+        userRef.child("username").setValue(username);
         userRef.child("password").setValue(password);
 
-        Log.d("ProfileFragment", "Profile updated: Name=" + name + ", Password=****");
+        usernameText.setText("@" + username);
+        actualPassword = password; // Update the actual password
+        inputPassword.setText(maskPassword(password.length())); // Reapply masking
     }
 
     // Validates the input fields
     private boolean validateInput() {
-        String name = valueName.getText().toString().trim();
+        String username = valueName.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
 
-        if (name.isEmpty()) {
-            valueName.setError("Name is required!");
+        if (username.isEmpty()) {
+            valueName.setError("Username is required!");
             return false;
         }
 

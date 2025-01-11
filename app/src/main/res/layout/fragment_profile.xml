@@ -5,152 +5,209 @@
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
-    <!-- Profile Title (Not Centered) -->
-    <TextView
-        android:id="@+id/profile_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/caprasimo_regular"
-        android:text="Profile"
-        android:textColor="@color/blue"
-        android:textSize="32sp"
-        android:textStyle="bold" />
-
-    <!-- Profile Picture and Change Button -->
-    <LinearLayout
-        android:id="@+id/profile_picture_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profile_title"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <!-- Profile Picture -->
-        <ImageView
-            android:id="@+id/profile_picture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/default_profile"
-            android:scaleType="centerCrop"
-            android:background="@drawable/circle_border"
-            android:contentDescription="Profile Picture" />
-
-        <!-- Change Picture Button -->
-        <ImageButton
-            android:id="@+id/change_picture_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/camera_icon"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center"
-            android:contentDescription="Change Profile Picture"
-            android:layout_marginTop="-20dp" />
-    </LinearLayout>
-
-
-    <!-- Container for Centered Content -->
-    <LinearLayout
-        android:id="@+id/centered_container"
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:visibility="visible" />
 
-        <!-- Name Label -->
+    <!-- Main Content Layout -->
+    <RelativeLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <!-- Blue Background Header -->
+        <View
+            android:id="@+id/blue_header"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/blue" />
+
+        <!-- Profile Title -->
         <TextView
-            android:id="@+id/label_name"
+            android:id="@+id/profile_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/username_text"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- Name Value -->
-        <EditText
-            android:id="@+id/value_name"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/username_text"
-            android:enabled="false"
-            android:background="@color/white"
-            android:padding="12dp" />
-
-        <!-- Email Label -->
-        <TextView
-            android:id="@+id/label_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/email_text"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- Email Value -->
-        <EditText
-            android:id="@+id/input_email"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/email_text"
-            android:enabled="false"
-            android:background="@color/white"
-            android:padding="12dp" />
-
-        <!-- Password Label -->
-        <TextView
-            android:id="@+id/label_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Password"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <!-- Password Value -->
-        <EditText
-            android:id="@+id/input_password"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="xxxxxxxx"
-            android:enabled="false"
-            android:background="@color/white"
-            android:padding="12dp" />
-
-        <!-- Save Button -->
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/blue"
-            android:text="Save"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/caprasimo_regular"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:text="Profile"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/edit_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:src="@drawable/edit"
-        android:contentDescription="Edit Profile" />
+        <!-- Edit Button -->
+        <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/edit"
+            android:contentDescription="Edit Profile" />
 
+        <!-- White Background Section -->
+        <RelativeLayout
+            android:id="@+id/white_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/blue_header"
+            android:background="@drawable/rounded_section"
+            android:paddingTop="100dp"
+            android:paddingBottom="40dp"
+            android:layout_marginTop="-25dp">
 
+            <!-- Username -->
+            <TextView
+                android:id="@+id/username_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_picture"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-6dp"
+                android:fontFamily="@font/caprasimo_regular"
+                android:text="@username"
+                android:textColor="@color/grey"
+                android:textSize="20sp" />
+
+            <!-- Container for Centered Content -->
+            <LinearLayout
+                android:id="@+id/centered_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/username_text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Name Label -->
+                <TextView
+                    android:id="@+id/label_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/username_text"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/helvetica_bold"
+                    android:textStyle="bold" />
+
+                <!-- Name Value -->
+                <EditText
+                    android:id="@+id/value_name"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/username_text"
+                    android:enabled="false"
+                    android:background="@color/white"
+                    android:padding="12dp"
+                    android:fontFamily="@font/helvetica" />
+
+                <!-- Email Label -->
+                <TextView
+                    android:id="@+id/label_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/email_text"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/helvetica_bold" />
+
+                <!-- Email Value -->
+                <EditText
+                    android:id="@+id/input_email"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/email_text"
+                    android:enabled="false"
+                    android:background="@color/white"
+                    android:padding="12dp"
+                    android:fontFamily="@font/helvetica" />
+
+                <!-- Password Label -->
+                <TextView
+                    android:id="@+id/label_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Password"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/helvetica_bold" />
+
+                <!-- Password Value -->
+                <EditText
+                    android:id="@+id/input_password"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="********"
+                    android:enabled="false"
+                    android:background="@color/white"
+                    android:padding="12dp"
+                    android:fontFamily="@font/helvetica"
+                    android:inputType="textPassword" />
+
+                <!-- Container for Save and Cancel Buttons -->
+                <LinearLayout
+                    android:id="@+id/button_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <!-- Save Button -->
+                    <Button
+                        android:id="@+id/save_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/blue"
+                        android:text="Save"
+                        android:fontFamily="@font/caprasimo_regular"
+                        android:fontColor="@d"
+                        android:visibility="gone"
+                        android:textColor="@color/white"/>
+
+                    <!-- Cancel Button -->
+                    <Button
+                        android:id="@+id/cancel_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/blue"
+                        android:text="Cancel"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/caprasimo_regular"
+                        android:visibility="gone"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Profile Picture Overlay -->
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/profile"
+            android:scaleType="centerCrop"
+            android:contentDescription="Profile Picture" />
+    </RelativeLayout>
 </RelativeLayout>
-
