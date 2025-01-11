@@ -3,7 +3,7 @@
     android:id="@+id/question_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue">
+    android:background="@drawable/backgroundquiz">
 
     <!-- Loading Indicator -->
     <ProgressBar
@@ -82,8 +82,8 @@
                 android:paddingRight="20dp"
                 android:text="Question here"
                 android:textColor="#FFFFFF"
-                android:fontFamily="@font/timeless_memories_regular"
-                android:textSize="20sp"
+                android:fontFamily="@font/caprasimo_regular"
+                android:textSize="24sp"
                 android:layout_marginBottom="16dp" />
 
             <!-- Answer Options -->
@@ -101,9 +101,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/orange"
+                    android:background="@drawable/button_background_quiz"
                     android:text="answer 1"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/blue3"
                     android:fontFamily="@font/timeless_memories_regular"
                     android:textSize="16sp"
                     android:elevation="10dp"/>
@@ -114,9 +114,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/orange"
+                    android:background="@drawable/button_background_quiz"
                     android:text="answer 2"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/blue3"
                     android:fontFamily="@font/timeless_memories_regular"
                     android:textSize="16sp"
                     android:elevation="10dp"/>
@@ -127,9 +127,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/orange"
+                    android:background="@drawable/button_background_quiz"
                     android:text="answer 3"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/blue3"
                     android:fontFamily="@font/timeless_memories_regular"
                     android:textSize="16sp"
                     android:elevation="10dp"/>
@@ -140,10 +140,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/orange"
+                    android:background="@drawable/button_background_quiz"
                     android:text="answer 4"
                     android:fontFamily="@font/timeless_memories_regular"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/blue3"
                     android:textSize="16sp"
                     android:elevation="10dp"/>
             </LinearLayout>
