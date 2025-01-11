@@ -1,94 +1,151 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:background="@color/beige"
     tools:context=".LoginActivity">
-
-    <ImageView
-        android:id="@+id/logo_image"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/logo"
-        android:contentDescription="@string/app_name"
-        android:layout_gravity="center"/>
 
     <!-- Username Label -->
     <TextView
-        android:id="@+id/label_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:textColor="@color/black"
-        android:gravity="start"
-        android:text="@string/username_text"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <!-- Username Input -->
-    <EditText
-        android:id="@+id/input_username"
+        android:id="@+id/label_app"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:hint="@string/login_field"
-        android:padding="12dp"
-        android:inputType="text"
-        android:autofillHints="username"/>
-
-    <!-- Password Label -->
-    <TextView
-        android:id="@+id/label_password"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:textColor="@color/black"
-        android:gravity="start"
-        android:text="@string/password_text"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <!-- Password Input -->
-    <EditText
-        android:id="@+id/input_password"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:hint="@string/password_field"
-        android:padding="12dp"
-        android:inputType="textPassword"
-        android:autofillHints="password"/>
-
-    <!-- Login Button -->
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="260dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/blue"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:fontFamily="@font/caprasimo_regular"
         android:gravity="center"
-        android:text="@string/login_text"
-        android:textSize="20sp" />
+        android:layout_marginTop="50dp"
+        android:layout_above="@id/logo_image"
+        android:text="Road to Merdeka"
+        android:textColor="@color/blue3"
+        android:textSize="40sp"
+         />
 
-    <TextView
-        android:id="@+id/sign_up_link"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:gravity="center"
-        android:text="@string/signup_redirect"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:clickable="true"
-        android:focusable="true" />
+    <!-- Rounded Section -->
+    <RelativeLayout
+        android:id="@+id/white_section"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/rounded_section_blue"
+        >
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/centered_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_margin="0dp">
+
+            <!-- Username Label -->
+            <TextView
+                android:id="@+id/label_signin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/caprasimo_regular"
+                android:gravity="start"
+                android:text="@string/signin_text"
+                android:textColor="@color/beige"
+                android:textSize="48sp"
+                android:textStyle="bold" />
+
+            <!-- Username Label -->
+            <TextView
+                android:id="@+id/label_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/timeless_memories_regular"
+                android:gravity="start"
+                android:text="@string/username_text"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Username Input -->
+            <EditText
+                android:id="@+id/input_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:autofillHints="username"
+                android:fontFamily="@font/timeless_memories_regular"
+                android:textColor="@color/white"
+                android:hint="@string/login_field"
+                android:inputType="text"
+                android:padding="12dp" />
+
+            <!-- Password Label -->
+            <TextView
+                android:id="@+id/label_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/timeless_memories_regular"
+                android:gravity="start"
+                android:text="@string/password_text"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Password Input -->
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:autofillHints="password"
+                android:fontFamily="@font/timeless_memories_regular"
+                android:hint="@string/password_field"
+                android:textColor="@color/white"
+                android:inputType="textPassword"
+                android:padding="12dp" />
+
+            <!-- Login Button -->
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="260dp"
+                android:layout_height="58dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/button_bordered_transparent"
+                android:backgroundTint="@color/grey"
+                android:fontFamily="@font/caprasimo_regular"
+                android:gravity="center"
+                android:textColor="@color/beige"
+                android:text="@string/login_text"
+                android:textSize="20sp" />
+
+            <!-- Sign Up Link -->
+            <TextView
+                android:id="@+id/sign_up_link"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/timeless_memories_regular"
+                android:gravity="center"
+                android:text="@string/signup_redirect"
+                android:textColor="@color/beige"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- App Logo -->
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:src="@drawable/book2"
+        android:layout_gravity="center"
+        android:contentDescription="@string/app_name"
+        android:layout_marginTop="-200dp"
+        android:elevation="80dp"/>
+</FrameLayout>
+
