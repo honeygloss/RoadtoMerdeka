@@ -51,11 +51,12 @@
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
-        app:itemIconTint="@color/blue"
-        app:itemTextColor="@color/blue"
-        android:layout_gravity="start" />
+        android:paddingTop="150dp"
+        android:paddingBottom="150dp"
+        android:fitsSystemWindows="true"
+        app:itemIconTint="@color/blue3"
+        app:itemTextColor="@color/blue3" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
