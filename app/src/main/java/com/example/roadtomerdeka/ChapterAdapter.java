@@ -58,15 +58,19 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
     public void onBindViewHolder(@NonNull ChapterViewHolder holder, int position) {
         Chapter chapter = chapterList.get(position);
 
-        // Determine if the chapter is locked based on userCompletedChapters map
-        boolean isLocked = false;
+        boolean isLocked;
         if (position > 0) {
             String previousChapterId = chapterList.get(position - 1).getId();
-            // Locked if previous chapter is not completed (false in the map)
-            isLocked = !userCompletedChapters.containsKey(previousChapterId) || userCompletedChapters.get(previousChapterId);
+            // Replace getOrDefault with a null-check-based fallback
+            if (!userCompletedChapters.containsKey(previousChapterId) || !Boolean.TRUE.equals(userCompletedChapters.get(previousChapterId))) {
+                isLocked = true;
+            } else {
+                isLocked = false;
+            }
+        } else {
+            isLocked = false;
         }
 
-        // Debug log to track locking status
         Log.d("ChapterAdapter", "Chapter: " + chapter.getId() + ", Is Locked: " + isLocked);
 
         // Update the UI based on lock status
@@ -86,9 +90,8 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         holder.bind(chapter);
 
         // Set click listener
-        boolean finalIsLocked = isLocked;
         holder.itemView.setOnClickListener(v -> {
-            if (!finalIsLocked) {
+            if (!isLocked) {
                 Intent intent = new Intent(context, EachChapterFragment.class);
                 intent.putExtra("chapter_id", chapter.getId());
                 context.startActivity(intent);
@@ -106,6 +109,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         int color = colors[position % colors.length];
         holder.frameLayout.setBackgroundColor(color);
     }
+
 
 
 

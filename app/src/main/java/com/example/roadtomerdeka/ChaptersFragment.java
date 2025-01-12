@@ -64,17 +64,23 @@ public class ChaptersFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userCompletedChapters.clear();
                 Log.d(TAG, "Fetching user quiz progress...");
+
+                // Iterate through quizzes
                 for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
                     String quizKey = quizSnapshot.getKey();
                     Boolean completed = quizSnapshot.child("completed").getValue(Boolean.class);
 
-                    // Log the completed status for each quiz
-                    Log.d(TAG, "Quiz ID: " + quizKey + ", Completed: " + completed);
+                    // Map quiz completion to corresponding chapters
+                    if (quizKey != null && completed != null) {
+                        // Assuming quiz IDs and chapter numbers are aligned
+                        String chapterId = "chapter" + (userCompletedChapters.size() + 1);
+                        userCompletedChapters.put(chapterId, completed);
 
-                    userCompletedChapters.put(quizKey, completed != null ? completed : false); // Default not completed if not found
+                        Log.d(TAG, "Mapped Quiz: " + quizKey + " to Chapter: " + chapterId + ", Completed: " + completed);
+                    }
                 }
 
-                // Fetch chapters after getting quiz progress
+                // Fetch chapters after linking quiz progress
                 loadChapters();
             }
 
@@ -85,6 +91,7 @@ public class ChaptersFragment extends Fragment {
             }
         });
     }
+
 
 
     private void loadChapters() {
