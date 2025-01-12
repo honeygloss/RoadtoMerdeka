@@ -56,20 +56,6 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/concert_one"/>
 
-
-        <!-- Question Number -->
-        <TextView
-            android:id="@+id/question_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="280dp"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/concert_one"
-            android:text="1/?"
-            android:textColor="@color/light_grey"
-            android:textSize="15sp" />
-
         <!-- Score -->
         <TextView
             android:id="@+id/score"
@@ -82,6 +68,20 @@
             android:text="xxxx"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
+
+        <!-- Question Number -->
+        <TextView
+            android:id="@+id/question_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="280dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/concert_one"
+            android:layout_above="@+id/centered_content"
+            android:text="1/?"
+            android:textColor="@color/light_grey"
+            android:textSize="15sp" />
 
         <!-- Centered Content (Image, Question, Buttons) -->
         <LinearLayout
