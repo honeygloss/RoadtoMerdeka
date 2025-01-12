@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
 
         if (glass != null) {
             // Ensure the method is called with the correct context
-            glass.setBlur(requireActivity(), glass, 10);
+            glass.setBlur(requireActivity(), glass);
         }
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
