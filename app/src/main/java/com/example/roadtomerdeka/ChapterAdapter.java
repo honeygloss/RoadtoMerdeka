@@ -55,18 +55,16 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
     public void onBindViewHolder(@NonNull ChapterViewHolder holder, int position) {
         Chapter chapter = chapterList.get(position);
 
-
-        // Lock and unlock mechanism based on previous chapter completion
+        // Determine if the chapter is locked
         boolean isLocked;
         if (position > 0) {
             String previousChapterId = chapterList.get(position - 1).getId();
             isLocked = !userCompletedChapters.containsKey(previousChapterId) || !userCompletedChapters.get(previousChapterId);
         } else {
-            isLocked = false;
+            isLocked = false; // First chapter is always unlocked
         }
-        holder.bind(chapter);
 
-        // Update the UI based on whether the chapter is locked or unlocked
+        // Update the UI for locked/unlocked chapters
         if (isLocked) {
             holder.lockIcon.setVisibility(View.VISIBLE);
             holder.blurOverlay.setVisibility(View.VISIBLE);
@@ -77,16 +75,17 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
             holder.chapterImage.setVisibility(View.VISIBLE);
         }
 
-        // Use the same isLocked variable here for the click listener
+        // Bind data to the view
+        holder.bind(chapter);
+
+        // Set click listener
         holder.itemView.setOnClickListener(v -> {
-            // If the chapter is not locked, navigate to the chapter details
             if (!isLocked) {
                 Intent intent = new Intent(context, EachChapterFragment.class);
                 intent.putExtra("chapter_id", chapter.getId());
                 context.startActivity(intent);
             }
         });
-
 
         // Set the CardView background color with a palette
         int[] colors = {
@@ -97,6 +96,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         int color = colors[position % colors.length];
         holder.cardView.setCardBackgroundColor(color);
     }
+
 
 
     @Override

@@ -6,6 +6,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextPaint;
+import android.util.Log;
 import android.widget.TextView;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -195,7 +196,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Initialize chapter_status
-        DatabaseReference chapterStatusRef = userProgressRef.child("chapter_status");
+        DatabaseReference chapterStatusRef = FirebaseDatabase.getInstance()
+                .getReference("user_progress")
+                .child(userId)
+                .child("chapter_status");
 
         DatabaseReference chaptersRef = FirebaseDatabase.getInstance().getReference("chapters");
         chaptersRef.get().addOnCompleteListener(task -> {
@@ -209,22 +213,21 @@ public class MainActivity extends AppCompatActivity {
                     // Initialize chapter progress
                     boolean finalFirstChapter = firstChapter;
                     chapterProgress.put(chapterKey, new HashMap<String, Object>() {{
-                        put("locked", !finalFirstChapter); // Only first chapter unlocked
+                        put("locked", !finalFirstChapter); // Unlock the first chapter
                     }});
 
-                    firstChapter = false; // All other chapters locked
+                    firstChapter = false; // Lock subsequent chapters
                 }
 
-                // Save chapter progress
                 chapterStatusRef.setValue(chapterProgress).addOnCompleteListener(progressTask -> {
                     if (progressTask.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "Chapter progress initialized successfully!", Toast.LENGTH_SHORT).show();
+                        Log.d("FirebaseWrite", "Chapter progress initialized successfully!");
                     } else {
-                        Toast.makeText(MainActivity.this, "Failed to initialize chapter progress: " + progressTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("FirebaseWrite", "Failed to initialize chapter progress: " + progressTask.getException().getMessage());
                     }
                 });
             } else {
-                Toast.makeText(MainActivity.this, "Failed to fetch chapters: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("FirebaseRead", "Failed to fetch chapters: " + (task.getException() != null ? task.getException().getMessage() : "No data exists"));
             }
         });
     }
