@@ -1,6 +1,5 @@
 package com.example.roadtomerdeka;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +32,8 @@ public class ChaptersFragment extends Fragment {
     private String userId;
     private Map<String, Boolean> userCompletedChapters = new HashMap<>();
 
+    private static final String TAG = "ChaptersFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -49,13 +50,25 @@ public class ChaptersFragment extends Fragment {
         userProgressRef = FirebaseDatabase.getInstance().getReference("user_progress").child(userId).child("chapter_status");
 
         // Fetch user progress first
+        fetchUserProgress();
+
+        return view;
+    }
+
+    private void fetchUserProgress() {
         userProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userCompletedChapters.clear();
+                Log.d(TAG, "Fetching user progress...");
                 for (DataSnapshot chapterSnapshot : snapshot.getChildren()) {
                     String chapterKey = chapterSnapshot.getKey();
-                    boolean locked = chapterSnapshot.child("locked").getValue(Boolean.class);
-                    userCompletedChapters.put(chapterKey, locked);
+                    Boolean locked = chapterSnapshot.child("locked").getValue(Boolean.class);
+
+                    // Log the locked status for each chapter
+                    Log.d(TAG, "Chapter ID: " + chapterKey + ", Locked: " + locked);
+
+                    userCompletedChapters.put(chapterKey, locked != null ? locked : true); // Default locked if not found
                 }
 
                 // Fetch chapters after getting user progress
@@ -63,33 +76,42 @@ public class ChaptersFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to fetch user progress: " + error.getMessage());
                 Toast.makeText(getContext(), "Failed to fetch user progress: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        return view;
     }
 
     private void loadChapters() {
         chaptersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 chapterList.clear();
+                Log.d(TAG, "Fetching chapters...");
                 for (DataSnapshot chapterSnapshot : snapshot.getChildren()) {
                     Chapter chapter = chapterSnapshot.getValue(Chapter.class);
                     if (chapter != null) {
                         chapter.setId(chapterSnapshot.getKey());
                         chapterList.add(chapter);
+
+                        // Log the chapter data
+                        Log.d(TAG, "Loaded Chapter: " + chapter.getTitle() + ", ID: " + chapter.getId());
+                    } else {
+                        Log.e(TAG, "Chapter data is null for one of the entries.");
                     }
                 }
+
+                // Log user progress map to confirm locked/unlocked statuses
+                Log.d(TAG, "User Progress Map: " + userCompletedChapters);
 
                 chapterAdapter = new ChapterAdapter(chapterList, getParentFragmentManager(), getContext(), userCompletedChapters);
                 recyclerView.setAdapter(chapterAdapter);
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to load chapters: " + error.getMessage());
                 Toast.makeText(getContext(), "Failed to load chapters: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -105,45 +127,26 @@ public class ChaptersFragment extends Fragment {
         // Fetch updated user progress
         userProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userCompletedChapters.clear();
+                Log.d(TAG, "Refreshing user progress...");
                 for (DataSnapshot chapterSnapshot : snapshot.getChildren()) {
                     String chapterKey = chapterSnapshot.getKey();
-                    boolean locked = chapterSnapshot.child("locked").getValue(Boolean.class);
-                    userCompletedChapters.put(chapterKey, locked);
+                    Boolean locked = chapterSnapshot.child("locked").getValue(Boolean.class);
+
+                    // Log the locked status for each chapter
+                    Log.d(TAG, "Chapter ID: " + chapterKey + ", Locked: " + locked);
+
+                    userCompletedChapters.put(chapterKey, locked != null ? locked : true); // Default locked if not found
                 }
 
                 // Reload chapters after refreshing progress
-                chaptersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        chapterList.clear();
-                        for (DataSnapshot chapterSnapshot : snapshot.getChildren()) {
-                            Chapter chapter = chapterSnapshot.getValue(Chapter.class);
-                            if (chapter != null) {
-                                chapter.setId(chapterSnapshot.getKey());
-                                chapterList.add(chapter);
-                            }
-                        }
-
-                        // Notify the adapter of data changes
-                        if (chapterAdapter != null) {
-                            chapterAdapter.notifyDataSetChanged();
-                        } else {
-                            chapterAdapter = new ChapterAdapter(chapterList, getParentFragmentManager(), getContext(), userCompletedChapters);
-                            recyclerView.setAdapter(chapterAdapter);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        Toast.makeText(getContext(), "Failed to load chapters: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                loadChapters();
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to fetch user progress: " + error.getMessage());
                 Toast.makeText(getContext(), "Failed to fetch user progress: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -56,12 +56,12 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         Chapter chapter = chapterList.get(position);
 
         // Determine if the chapter is locked
-        boolean isLocked;
-        if (position > 0) {
+        boolean isLocked = false;
+        if (position == 0) {
+            isLocked = false;
+        } else {
             String previousChapterId = chapterList.get(position - 1).getId();
             isLocked = !userCompletedChapters.containsKey(previousChapterId) || !userCompletedChapters.get(previousChapterId);
-        } else {
-            isLocked = false; // First chapter is always unlocked
         }
 
         // Update the UI for locked/unlocked chapters
@@ -79,8 +79,9 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         holder.bind(chapter);
 
         // Set click listener
+        boolean finalIsLocked = isLocked;
         holder.itemView.setOnClickListener(v -> {
-            if (!isLocked) {
+            if (!finalIsLocked) {
                 Intent intent = new Intent(context, EachChapterFragment.class);
                 intent.putExtra("chapter_id", chapter.getId());
                 context.startActivity(intent);
