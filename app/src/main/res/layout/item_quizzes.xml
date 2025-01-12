@@ -16,7 +16,6 @@
         android:orientation="vertical"
         android:background="@android:color/transparent"
         >
-
         <!-- Chapter Header Title -->
 
         <!-- Frame Layout Container randomize coloe-->
@@ -26,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/caprasimo_regular"
-            android:paddingLeft="20dp"
+            android:paddingLeft="15dp"
             android:text="@string/quizzes_num"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -37,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:id="@+id/frameLayout"
-            android:background="@drawable/rounded_corners">
+            android:background="@drawable/rounded_corners"
+            android:elevation="4dp">
 
             <!-- random Image Positioned to Overlay Above the FrameLayout -->
             <ImageView
