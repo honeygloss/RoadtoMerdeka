@@ -41,7 +41,7 @@
             android:layout_height="50dp"
             android:src="@drawable/play"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/play_button_desc"
+            android:contentDescription="play_button_desc"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp" />
 

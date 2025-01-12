@@ -50,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.input_password);
         inputPassword2 = findViewById(R.id.input_password2);
         inputUsername = findViewById(R.id.input_username);
-        buttonRegister = findViewById(R.id.button);
-        progressBar = findViewById(R.id.progressBar);
+        buttonRegister = findViewById(R.id.register_button);
         signInLink = findViewById(R.id.sign_in_link);
 
         // Initialize Firebase Database References
@@ -65,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(@NonNull View widget) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
 
             @Override
@@ -144,28 +144,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeUserQuizProgress(String userId) {
-        DatabaseReference userProgressRef = FirebaseDatabase.getInstance().getReference("user_progress").child(userId).child("quiz_status");
+        DatabaseReference userProgressRef = FirebaseDatabase.getInstance()
+                .getReference("user_progress")
+                .child(userId)
+                .child("quiz_status");
+
+        DatabaseReference quizScoresRef = FirebaseDatabase.getInstance()
+                .getReference("quiz_scores")
+                .child(userId);
 
         quizzesRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult().exists()) {
                 Map<String, Object> quizProgress = new HashMap<>();
+                Map<String, Object> quizScores = new HashMap<>();
                 boolean firstQuiz = true;
 
                 for (DataSnapshot quizSnapshot : task.getResult().getChildren()) {
                     String quizKey = quizSnapshot.getKey();
 
+                    // Initialize quiz progress
                     boolean finalFirstQuiz = firstQuiz;
                     quizProgress.put(quizKey, new HashMap<String, Object>() {{
                         put("completed", false);
                         put("locked", !finalFirstQuiz);
                     }});
 
+                    // Initialize quiz scores
+                    quizScores.put(quizKey, new HashMap<String, Object>() {{
+                        put("best_score", 0); // Set initial best score to 0
+                        put("attempts", new HashMap<String, Object>()); // Empty attempts node
+                    }});
+
                     firstQuiz = false; // Only the first quiz will be unlocked
                 }
 
+                // Save quiz progress
                 userProgressRef.setValue(quizProgress).addOnCompleteListener(progressTask -> {
                     if (progressTask.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "Quiz progress initialized!", Toast.LENGTH_SHORT).show();
+                        // Save quiz scores
+                        quizScoresRef.setValue(quizScores).addOnCompleteListener(scoresTask -> {
+                            if (scoresTask.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Quiz progress and scores initialized!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to initialize quiz scores: " + scoresTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         Toast.makeText(MainActivity.this, "Failed to initialize quiz progress: " + progressTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -175,4 +198,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
 }

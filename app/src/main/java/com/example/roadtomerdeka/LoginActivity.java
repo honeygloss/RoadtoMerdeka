@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(LoginActivity.this, Home.class);
                                     intent.putExtra("username", username); // Send username to Home
                                     startActivity(intent);
+                                    overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
                                     finish();
                                 }
 
@@ -146,5 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.roadtomerdeka;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,7 +32,7 @@ import java.util.List;
 
 public class EachQuizFragment extends AppCompatActivity {
 
-    private TextView questionNumber, scoreText, questionText;
+    private TextView questionNumber, scoreText, questionText, streakText, timerText;;
     private ProgressBar progressBar, loadingIndicator;
     private Button answer1, answer2, answer3, answer4;
     private List<Question> questionList = new ArrayList<>();
@@ -40,6 +41,12 @@ public class EachQuizFragment extends AppCompatActivity {
     private String quizId;
     private String userId;
     private DatabaseReference quizzesRef, userProgressRef;
+    private int streakCount = 0;
+    private int highestStreak = 0;
+    private int basePoints = 10; // Base points for each correct answer
+    private Handler timerHandler = new Handler(); // To update the timer
+    private long quizStartTime; // To store the start time in milliseconds
+    private Runnable timerRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,7 @@ public class EachQuizFragment extends AppCompatActivity {
         // Initialize UI elements
         questionNumber = findViewById(R.id.question_number);
         scoreText = findViewById(R.id.score);
+        streakText = findViewById(R.id.streak_text); // Add this in your layout XML
         questionText = findViewById(R.id.question_text);
         progressBar = findViewById(R.id.progressBar);
         loadingIndicator = findViewById(R.id.loading_indicator);
@@ -61,6 +69,8 @@ public class EachQuizFragment extends AppCompatActivity {
         answer2 = findViewById(R.id.answer2);
         answer3 = findViewById(R.id.answer3);
         answer4 = findViewById(R.id.answer4);
+
+        streakText.setText("");
 
         // Get quizId from intent
         quizId = getIntent().getStringExtra("quizId");
@@ -71,6 +81,31 @@ public class EachQuizFragment extends AppCompatActivity {
         userProgressRef = FirebaseDatabase.getInstance().getReference("user_progress").child(userId).child("quiz_status");
 
         showLoadingIndicator();
+
+        // Find the timer TextView
+        timerText = findViewById(R.id.timer_text);
+
+        // Record the quiz start time
+        quizStartTime = System.currentTimeMillis();
+
+        // Initialize the timer Runnable
+        timerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                long elapsedTimeMillis = System.currentTimeMillis() - quizStartTime;
+                int minutes = (int) (elapsedTimeMillis / 1000) / 60;
+                int seconds = (int) (elapsedTimeMillis / 1000) % 60;
+
+                // Update the timer TextView
+                timerText.setText(String.format("%02d:%02d", minutes, seconds));
+
+                // Post the Runnable again after 1 second
+                timerHandler.postDelayed(this, 1000);
+            }
+        };
+
+        // Start the timer
+        timerHandler.post(timerRunnable);
         loadQuestions();
 
         // Set click listeners for answer buttons
@@ -81,6 +116,7 @@ public class EachQuizFragment extends AppCompatActivity {
     }
 
     private void loadQuestions() {
+        resetButtonStyles();
         quizzesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -106,21 +142,35 @@ public class EachQuizFragment extends AppCompatActivity {
         });
     }
 
+    private void resetButtonStyles() {
+        // Reset backgrounds
+        answer1.setBackgroundResource(R.drawable.button_background_quiz);
+        answer2.setBackgroundResource(R.drawable.button_background_quiz);
+        answer3.setBackgroundResource(R.drawable.button_background_quiz);
+        answer4.setBackgroundResource(R.drawable.button_background_quiz);
+
+        // Reset text color
+        int textColor = getResources().getColor(R.color.blue3);
+        answer1.setTextColor(textColor);
+        answer2.setTextColor(textColor);
+        answer3.setTextColor(textColor);
+        answer4.setTextColor(textColor);
+    }
+
+
     private void displayQuestion() {
         resetButtonColors();
         if (currentQuestionIndex < questionList.size()) {
             Question currentQuestion = questionList.get(currentQuestionIndex);
-            questionNumber.setText((currentQuestionIndex + 1) + "/" + questionList.size());
+            questionNumber.setText("Question "+ (currentQuestionIndex + 1) + " of " + questionList.size());
             questionText.setText(currentQuestion.getQuestion_text());
             answer1.setText(currentQuestion.getA());
             answer2.setText(currentQuestion.getB());
             answer3.setText(currentQuestion.getC());
             answer4.setText(currentQuestion.getD());
-            adjustButtonHeight(answer1);
-            adjustButtonHeight(answer2);
-            adjustButtonHeight(answer3);
-            adjustButtonHeight(answer4);
-            progressBar.setProgress((currentQuestionIndex * 100) / questionList.size());
+            // Animate progress bar
+            int progress = (currentQuestionIndex * 100) / questionList.size();
+            animateProgressBar(progress);
         } else {
             showResult();
         }
@@ -142,17 +192,34 @@ public class EachQuizFragment extends AppCompatActivity {
         else if (currentQuestion.getCorrect_ans().equals("D")) correctButton = answer4;
 
         if (currentQuestion.getCorrect_ans().equals(selectedOption)) {
-            score += 1;
-            playSound(R.raw.correct);
-            playColorAnimation(selectedButton, getResources().getColor(R.color.orange), getResources().getColor(R.color.green));
+            streakCount++;
+            int bonusPoints = streakCount * 5;
+            int questionPoints = basePoints + bonusPoints;
+            score += questionPoints;
 
+            if (streakCount > highestStreak) {
+                highestStreak = streakCount;
+            }
+
+            playSound(R.raw.correct);
+            playColorAnimation(selectedButton, getResources().getColor(R.color.white), getResources().getColor(R.color.green));
+
+            Toast.makeText(this, "Correct! +" + questionPoints + " points! (Streak: " + streakCount + ")", Toast.LENGTH_SHORT).show();
         } else {
+            streakCount = 0;
             playSound(R.raw.wrong);
-            playColorAnimation(selectedButton, getResources().getColor(R.color.orange), getResources().getColor(R.color.red));
-            playColorAnimation(correctButton, getResources().getColor(R.color.orange), getResources().getColor(R.color.green));
+            playColorAnimation(selectedButton, getResources().getColor(R.color.white), getResources().getColor(R.color.red));
+            playColorAnimation(correctButton, getResources().getColor(R.color.white), getResources().getColor(R.color.green));
+
+            Toast.makeText(this, "Incorrect! Streak reset.", Toast.LENGTH_SHORT).show();
         }
-        // Update score TextView
-        scoreText.setText("Score: " + score);
+        if (score == 0){
+            scoreText.setText("0");
+        }
+        else {
+            scoreText.setText("+" + score);
+        }
+        updateStreakText();
 
         // Hide irrelevant buttons
         hideIrrelevantButtons(selectedButton, correctButton);
@@ -164,6 +231,19 @@ public class EachQuizFragment extends AppCompatActivity {
             displayQuestionWithTransition();
         }, 1500);
     }
+    private void updateStreakText() {
+        StringBuilder fireEmojis = new StringBuilder();
+        for (int i = 0; i < streakCount; i++) {
+            fireEmojis.append("🔥");
+        }
+        if (streakCount == 0){
+            streakText.setText("");
+        }
+        else{
+            streakText.setText("+ "+fireEmojis);
+        }
+    }
+
 
     private void playSound(int soundResId) {
         MediaPlayer mp = MediaPlayer.create(EachQuizFragment.this, soundResId);
@@ -214,13 +294,6 @@ public class EachQuizFragment extends AppCompatActivity {
                     }
                 }).start();
     }
-
-    private void adjustButtonHeight(Button button) {
-        button.setMinHeight(0); // Adjust default button height
-        button.setPadding(20, 30, 20, 30);
-        button.setSingleLine(false); // Allow multiple lines for long text
-    }
-
     private void resetButtonColors() {
         resetButton(answer1);
         resetButton(answer2);
@@ -230,9 +303,8 @@ public class EachQuizFragment extends AppCompatActivity {
 
     private void resetButton(Button button) {
         button.setVisibility(View.VISIBLE);
-        button.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
+        button.setBackgroundTintList(getResources().getColorStateList(R.color.white));
         button.setTranslationY(0);
-        adjustButtonHeight(button);
     }
 
     private void disableButtons() {
@@ -249,14 +321,48 @@ public class EachQuizFragment extends AppCompatActivity {
         answer4.setEnabled(true);
     }
 
-    private void showResult() {
-        userProgressRef.child(quizId).child("completed").setValue(true);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Quiz Completed");
-        builder.setMessage("Your score: " + score + "/" + questionList.size());
-        builder.setPositiveButton("OK", (dialog, which) -> finish());
-        builder.show();
+    private void animateProgressBar(int targetProgress) {
+        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar, "progress", progressBar.getProgress(), targetProgress);
+        progressAnimator.setDuration(500);
+        progressAnimator.setInterpolator(new android.view.animation.AccelerateDecelerateInterpolator());
+        progressAnimator.start();
+
+        // Change color dynamically based on progress
+        if (targetProgress < 50) {
+            progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+        } else if (targetProgress < 80) {
+            progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
+        } else {
+            progressBar.setProgressTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+        }
     }
+
+    private void showResult() {
+        // Stop the timer
+        timerHandler.removeCallbacks(timerRunnable);
+
+        // Calculate time taken
+        long quizEndTime = System.currentTimeMillis();
+        long timeTakenMillis = quizEndTime - quizStartTime;
+        int minutes = (int) (timeTakenMillis / 1000) / 60;
+        int seconds = (int) (timeTakenMillis / 1000) % 60;
+
+        String timeTakenFormatted = String.format("%02d:%02d", minutes, seconds);
+
+        // Mark quiz as completed in Firebase
+        userProgressRef.child(quizId).child("completed").setValue(true);
+
+        // Pass data to the CompletedQuiz activity
+        Intent intent = new Intent(EachQuizFragment.this, CompletedQuiz.class);
+        intent.putExtra("score", score);
+        intent.putExtra("totalQuestions", questionList.size());
+        intent.putExtra("timeTaken", timeTakenFormatted);
+        startActivity(intent);
+
+        // Close the current activity
+        finish();
+    }
+
 
     private void showLoadingIndicator() {
         loadingIndicator.setVisibility(View.VISIBLE);

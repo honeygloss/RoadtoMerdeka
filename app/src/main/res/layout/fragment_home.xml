@@ -52,6 +52,7 @@
 
                 <!-- Score Text -->
                 <TextView
+                    android:id="@+id/scores"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="80 scores"
@@ -122,9 +123,10 @@
                 android:id="@+id/play_now_button"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:text="Continue reading"
+                android:text="@string/continue_button"
                 android:fontFamily="@font/caprasimo_regular"
-                android:background="@drawable/button_background"                android:textSize="10sp"
+                android:background="@drawable/button_background"
+                android:textSize="10sp"
                 android:textColor="@color/white"
                 android:layout_below="@id/quiz_name"
                 android:layout_marginTop="16dp"
@@ -162,6 +164,7 @@
             android:layout_marginStart="16dp">
 
             <LinearLayout
+                android:id="@+id/chapter_redirect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -189,6 +192,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/quiz_redirect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"

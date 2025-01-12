@@ -114,7 +114,7 @@
                 android:layout_height="58dp"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/button_bordered_transparent"
-                android:backgroundTint="@color/grey"
+                android:backgroundTint="@color/beige"
                 android:fontFamily="@font/caprasimo_regular"
                 android:gravity="center"
                 android:textColor="@color/beige"

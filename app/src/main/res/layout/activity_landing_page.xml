@@ -12,8 +12,9 @@
         android:id="@+id/imageView"
         android:layout_width="185dp"
         android:layout_height="197dp"
+        android:layout_below="@id/register_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="135dp"
+        android:layout_marginTop="101dp"
         android:src="@drawable/logo2" />
 
     <!-- Sign Up Button (Top-Right) -->
@@ -40,18 +41,11 @@
         android:textColor="@color/blue2"
         android:fontFamily="@font/timeless_memories_regular"
         android:textSize="16sp"
-        android:layout_above="@id/login_button"
-        android:layout_marginBottom="215dp"
+        android:layout_below="@id/imageView"
+        android:layout_marginTop="0dp"
         android:gravity="center" />
 
-    <ImageView
-        android:id="@+id/imageCircle"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/login_button"
-        android:layout_marginTop="200dp"
-        android:src="@drawable/circlethree" />
+
 
     <!-- Login Button (Bottom-Centered) -->
     <Button
@@ -60,8 +54,8 @@
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:backgroundTint="@color/blue"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_bordered_transparent"
         android:fontFamily="@font/caprasimo_regular"
         android:gravity="center"
         android:text="@string/signin_text"

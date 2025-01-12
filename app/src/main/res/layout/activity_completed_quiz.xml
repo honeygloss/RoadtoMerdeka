@@ -1,93 +1,144 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp">
+    android:background="@drawable/aura_background">
 
-    <!-- Title TextView -->
-    <TextView
-        android:id="@+id/quiz_chapter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chapter xx"
-        android:fontFamily="@font/caprasimo_regular"
-        android:textSize="48sp"
-        android:textColor="#000000"
-        android:layout_marginTop="40dp"
-        android:gravity="center" />
-
-    <!-- Title TextView -->
-    <TextView
-        android:id="@+id/completed_quiz_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quiz Completed!"
-        android:fontFamily="@font/caprasimo_regular"
-        android:textSize="24sp"
-        android:textColor="#000000"
-        android:layout_marginTop="40dp"
-        android:gravity="center" />
-
-    <!-- Progress Bar with bigger height -->
-    <ProgressBar
-        android:id="@+id/progressBar"
+    <!-- GIF Background -->
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/confetti_background"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:progress="75"
-        android:max="100"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_gravity="center" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/confetti"
+        android:visibility="gone" />
 
-    <!-- Score TextView -->
-    <TextView
-        android:id="@+id/score_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Score: 75%"
-        android:textSize="18sp"
-        android:textColor="#000000"
-        android:layout_marginTop="20dp"
-        android:gravity="center" />
-
-    <!-- Correct Answer TextView -->
-    <TextView
-        android:id="@+id/correct_answer_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Correct Answers: 15/20"
-        android:textSize="16sp"
-        android:textColor="#000000"
-        android:layout_marginTop="10dp"
-        android:gravity="center" />
-
+    <!-- Main Content -->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:layout_margin="50dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
 
+        <!-- Trophy Image -->
         <ImageView
-            android:id="@+id/quiz_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/book" />
+            android:id="@+id/trophy_icon"
+            android:layout_width="263dp"
+            android:layout_height="206dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="Trophy Icon"
+            android:src="@drawable/gold_medal" />
 
+        <!-- Congratulations Text -->
         <TextView
-            android:id="@+id/take_quiz_text"
+            android:id="@+id/quiz_chapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:text="Continue your journey !"
-            android:fontFamily="@font/timeless_memories_regular"
+            android:text="Congratulations!!"
+            android:fontFamily="@font/caprasimo_regular"
+            android:textSize="36sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="8dp"
+            android:gravity="center" />
+
+        <!-- Completed Quiz Title -->
+        <TextView
+            android:id="@+id/completed_quiz_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You've earned +70 points"
+            android:fontFamily="@font/caprasimo_regular"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="16dp"
+            android:gravity="center" />
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:progress="75"
+            android:max="100"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_gravity="center" />
+
+        <!-- Stats Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_background"
+            android:padding="16dp"
+            android:layout_marginTop="16dp">
+
+            <!-- Points Earned -->
+            <TextView
+                android:id="@+id/points_earned_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Points Earned: 150"
+                android:textSize="18sp"
+                android:fontFamily="@font/timeless_memories_regular"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"
+                android:gravity="center" />
+
+            <!-- Best Score -->
+            <TextView
+                android:id="@+id/best_score_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Best Score: 180"
+                android:textSize="16sp"
+                android:fontFamily="@font/timeless_memories_regular"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"
+                android:gravity="center" />
+
+            <!-- Time Taken -->
+            <TextView
+                android:id="@+id/time_taken_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time Taken: 5m 45s"
+                android:textSize="16sp"
+                android:fontFamily="@font/timeless_memories_regular"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <!-- More Content -->
+
+        <!-- Play Again Button -->
+        <Button
+            android:id="@+id/play_again_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Play Again"
+            android:backgroundTint="@color/white"
             android:textColor="@color/blue3"
+            android:fontFamily="@font/timeless_memories_regular"
+            android:textSize="16sp" />
+
+        <!-- Continue Journey Button -->
+        <Button
+            android:id="@+id/continue_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Continue Journey"
+            android:backgroundTint="@color/blue3"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/timeless_memories_regular"
             android:textSize="16sp" />
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>
