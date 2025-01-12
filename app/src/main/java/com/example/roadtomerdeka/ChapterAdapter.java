@@ -104,7 +104,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
                 ContextCompat.getColor(context, R.color.palette_color_3)
         };
         int color = colors[position % colors.length];
-        holder.cardView.setCardBackgroundColor(color);
+        holder.frameLayout.setBackgroundColor(color);
     }
 
 
@@ -117,7 +117,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
 
     public static class ChapterViewHolder extends RecyclerView.ViewHolder {
 
-        FrameLayout chapterContent;
+        FrameLayout frameLayout;
         ImageView lockIcon;
         View blurOverlay;
         ImageView chapterImage;
@@ -126,7 +126,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
 
         public ChapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            chapterContent = itemView.findViewById(R.id.frameLayout);
+            frameLayout = itemView.findViewById(R.id.frameLayout);
             chapterTitle = itemView.findViewById(R.id.text_chapter_title);
             chapterHeader = itemView.findViewById(R.id.text_chapter_header);
             chapterDesc = itemView.findViewById(R.id.text_chapter_desc);
