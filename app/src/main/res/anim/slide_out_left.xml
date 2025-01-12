@@ -3,4 +3,6 @@
     android:duration="300"
     android:fromXDelta="0%"
     android:toXDelta="-100%"
+    android:fillAfter="true"
     android:interpolator="@android:interpolator/accelerate_decelerate" />
+
