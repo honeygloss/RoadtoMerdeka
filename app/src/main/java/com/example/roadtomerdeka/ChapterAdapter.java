@@ -58,16 +58,17 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
     public void onBindViewHolder(@NonNull ChapterViewHolder holder, int position) {
         Chapter chapter = chapterList.get(position);
 
-        // Determine if the chapter is locked based on userCompletedChapters map
+        // Get corresponding quiz ID
+        String quizId = chapter.getQuizId(); // Ensure `Chapter` has a `getQuizId` method or similar
         boolean isLocked = false;
-        if (position > 0) {
-            String previousChapterId = chapterList.get(position - 1).getId();
-            // Locked if previous chapter is not completed (false in the map)
-            isLocked = !userCompletedChapters.containsKey(previousChapterId) || userCompletedChapters.get(previousChapterId);
+
+        if (position > 0 && quizId != null) {
+            // Check if the quiz is completed
+            isLocked = !userCompletedChapters.containsKey(quizId) || !userCompletedChapters.get(quizId);
         }
 
         // Debug log to track locking status
-        Log.d("ChapterAdapter", "Chapter: " + chapter.getId() + ", Is Locked: " + isLocked);
+        Log.d("ChapterAdapter", "Chapter: " + chapter.getId() + ", Quiz ID: " + quizId + ", Is Locked: " + isLocked);
 
         // Update the UI based on lock status
         if (isLocked) {

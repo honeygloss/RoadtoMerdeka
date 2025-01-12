@@ -63,34 +63,32 @@ public class ChaptersFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userCompletedChapters.clear();
-                Log.d(TAG, "Fetching user quiz progress...");
+                Log.d(TAG, "Fetching quiz progress directly...");
 
                 // Iterate through quizzes
                 for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
-                    String quizKey = quizSnapshot.getKey();
+                    String quizId = quizSnapshot.getKey();
                     Boolean completed = quizSnapshot.child("completed").getValue(Boolean.class);
 
-                    // Map quiz completion to corresponding chapters
-                    if (quizKey != null && completed != null) {
-                        // Assuming quiz IDs and chapter numbers are aligned
-                        String chapterId = "chapter" + (userCompletedChapters.size() + 1);
-                        userCompletedChapters.put(chapterId, completed);
-
-                        Log.d(TAG, "Mapped Quiz: " + quizKey + " to Chapter: " + chapterId + ", Completed: " + completed);
+                    // Store quiz completion status directly
+                    if (quizId != null && completed != null) {
+                        userCompletedChapters.put(quizId, completed);
+                        Log.d(TAG, "Quiz ID: " + quizId + ", Completed: " + completed);
                     }
                 }
 
-                // Fetch chapters after linking quiz progress
+                // Fetch chapters after getting quiz progress
                 loadChapters();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Failed to fetch user quiz progress: " + error.getMessage());
-                Toast.makeText(getContext(), "Failed to fetch user quiz progress: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Failed to fetch quiz progress: " + error.getMessage());
+                Toast.makeText(getContext(), "Failed to fetch quiz progress: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
 
 
