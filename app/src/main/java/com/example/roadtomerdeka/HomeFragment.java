@@ -49,13 +49,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Use the 'view' parameter to find the view
-        glass = view.findViewById(R.id.glass);
-
-        if (glass != null) {
-            // Ensure the method is called with the correct context
-            glass.setBlur(requireActivity(), glass);
-        }
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();

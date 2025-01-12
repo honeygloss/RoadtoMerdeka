@@ -33,20 +33,14 @@
             android:textColor="@color/blue"
             android:textStyle="bold" />
 
-        <!-- FKBlurView containing "Road to Merdeka" -->
-        <com.github.furkankaplan.fkblurview.FKBlurView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/glass"
+        <LinearLayout
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/shadow_background"
             android:padding="16dp"
-            android:elevation="10dp">
-
-        <LinearLayout
+            android:elevation="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -73,7 +67,6 @@
                 android:fontFamily="@font/cambo"
             />
             </LinearLayout>
-        </com.github.furkankaplan.fkblurview.FKBlurView>
 
     <!-- Streak Progress -->
         <RelativeLayout
@@ -164,7 +157,7 @@
             <!-- Button -->
             <Button
                 android:id="@+id/play_now_button"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="35dp"
                 android:text="@string/continue_button"
                 android:fontFamily="@font/caprasimo_regular"
@@ -176,6 +169,7 @@
                 android:textAllCaps="false"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
+                android:padding="24dp"
                 />
             <!-- Coin Icon -->
             <ImageView

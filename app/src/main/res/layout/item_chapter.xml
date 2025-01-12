@@ -26,7 +26,8 @@
             android:textSize="20sp"
             android:paddingLeft="15dp"
             android:paddingTop="20dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp"
+            android:textAllCaps="false"/>
 
         <FrameLayout
             android:layout_width="match_parent"

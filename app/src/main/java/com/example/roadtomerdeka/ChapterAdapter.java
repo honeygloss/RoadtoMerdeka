@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -116,7 +117,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
 
     public static class ChapterViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout chapterContent;
+        FrameLayout chapterContent;
         ImageView lockIcon;
         View blurOverlay;
         ImageView chapterImage;
@@ -125,7 +126,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
 
         public ChapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            chapterContent = itemView.findViewById(R.id.chapter_content);
+            chapterContent = itemView.findViewById(R.id.frameLayout);
             chapterTitle = itemView.findViewById(R.id.text_chapter_title);
             chapterHeader = itemView.findViewById(R.id.text_chapter_header);
             chapterDesc = itemView.findViewById(R.id.text_chapter_desc);
