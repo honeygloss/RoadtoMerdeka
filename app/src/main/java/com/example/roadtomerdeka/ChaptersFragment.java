@@ -56,32 +56,36 @@ public class ChaptersFragment extends Fragment {
     }
 
     private void fetchUserProgress() {
-        userProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference quizProgressRef = FirebaseDatabase.getInstance()
+                .getReference("user_progress").child(userId).child("quiz_status");
+
+        quizProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userCompletedChapters.clear();
-                Log.d(TAG, "Fetching user progress...");
-                for (DataSnapshot chapterSnapshot : snapshot.getChildren()) {
-                    String chapterKey = chapterSnapshot.getKey();
-                    Boolean locked = chapterSnapshot.child("locked").getValue(Boolean.class);
+                Log.d(TAG, "Fetching user quiz progress...");
+                for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
+                    String quizKey = quizSnapshot.getKey();
+                    Boolean completed = quizSnapshot.child("completed").getValue(Boolean.class);
 
-                    // Log the locked status for each chapter
-                    Log.d(TAG, "Chapter ID: " + chapterKey + ", Locked: " + locked);
+                    // Log the completed status for each quiz
+                    Log.d(TAG, "Quiz ID: " + quizKey + ", Completed: " + completed);
 
-                    userCompletedChapters.put(chapterKey, locked != null ? locked : true); // Default locked if not found
+                    userCompletedChapters.put(quizKey, completed != null ? completed : false); // Default not completed if not found
                 }
 
-                // Fetch chapters after getting user progress
+                // Fetch chapters after getting quiz progress
                 loadChapters();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Failed to fetch user progress: " + error.getMessage());
-                Toast.makeText(getContext(), "Failed to fetch user progress: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Failed to fetch user quiz progress: " + error.getMessage());
+                Toast.makeText(getContext(), "Failed to fetch user quiz progress: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     private void loadChapters() {
         chaptersRef.addListenerForSingleValueEvent(new ValueEventListener() {

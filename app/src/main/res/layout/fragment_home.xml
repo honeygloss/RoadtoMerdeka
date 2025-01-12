@@ -53,8 +53,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/rounded_background2"
-                android:blurRadius="10"
-                android:blurAutoUpdate="true">
+                >
 
             <!-- This LinearLayout holds your text elements (not affected by blur) -->
             <LinearLayout

@@ -2,12 +2,14 @@ package com.example.roadtomerdeka; //ChapterAdapter 3:37pm 11/1/2024
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,24 +57,28 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
     public void onBindViewHolder(@NonNull ChapterViewHolder holder, int position) {
         Chapter chapter = chapterList.get(position);
 
-        // Determine if the chapter is locked
+        // Determine if the chapter is locked based on userCompletedChapters map
         boolean isLocked = false;
-        if (position == 0) {
-            isLocked = false;
-        } else {
+        if (position > 0) {
             String previousChapterId = chapterList.get(position - 1).getId();
-            isLocked = !userCompletedChapters.containsKey(previousChapterId) || !userCompletedChapters.get(previousChapterId);
+            // Locked if previous chapter is not completed (false in the map)
+            isLocked = !userCompletedChapters.containsKey(previousChapterId) || userCompletedChapters.get(previousChapterId);
         }
 
-        // Update the UI for locked/unlocked chapters
+        // Debug log to track locking status
+        Log.d("ChapterAdapter", "Chapter: " + chapter.getId() + ", Is Locked: " + isLocked);
+
+        // Update the UI based on lock status
         if (isLocked) {
             holder.lockIcon.setVisibility(View.VISIBLE);
             holder.blurOverlay.setVisibility(View.VISIBLE);
             holder.chapterImage.setVisibility(View.GONE);
+            Log.d("ChapterAdapter", "Locked UI applied for Chapter: " + chapter.getId());
         } else {
             holder.lockIcon.setVisibility(View.GONE);
             holder.blurOverlay.setVisibility(View.GONE);
             holder.chapterImage.setVisibility(View.VISIBLE);
+            Log.d("ChapterAdapter", "Unlocked UI applied for Chapter: " + chapter.getId());
         }
 
         // Bind data to the view
@@ -85,6 +91,8 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
                 Intent intent = new Intent(context, EachChapterFragment.class);
                 intent.putExtra("chapter_id", chapter.getId());
                 context.startActivity(intent);
+            } else {
+                Toast.makeText(context, "This chapter is locked!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -97,6 +105,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         int color = colors[position % colors.length];
         holder.cardView.setCardBackgroundColor(color);
     }
+
 
 
 
