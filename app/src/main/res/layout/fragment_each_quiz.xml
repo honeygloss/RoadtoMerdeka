@@ -92,12 +92,6 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <!-- Question Image -->
-            <ImageView
-                android:id="@+id/question_image"
-                android:layout_width="200dp"
-                android:layout_height="150dp"
-                android:layout_marginBottom="16dp" />
 
             <!-- Question Text -->
             <TextView

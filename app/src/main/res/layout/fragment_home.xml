@@ -6,7 +6,7 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
         >
@@ -20,7 +20,8 @@
             android:textSize="16sp"
             android:fontFamily="@font/timeless_memories_regular"
             android:textColor="@color/dark_grey"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="20dp"/>
 
         <TextView
             android:id="@+id/play_text"
@@ -31,6 +32,41 @@
             android:fontFamily="@font/caprasimo_regular"
             android:textColor="@color/blue"
             android:textStyle="bold" />
+
+        <com.github.furkankaplan.fkblurview.FKBlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:id="@+id/glass">
+
+                <TextView
+                    android:id="@+id/label_app"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/caprasimo_regular"
+                    android:text="Road to Merdeka"
+                    android:textColor="@color/blue3"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/desc"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@id/label_app"
+                    android:fontFamily="@font/cambo"
+                    android:textColor="@color/blue"
+                    android:gravity="center"
+                     />
+        </com.github.furkankaplan.fkblurview.FKBlurView>
 
         <!-- Streak Progress -->
         <RelativeLayout
@@ -131,8 +167,8 @@
                 android:layout_below="@id/quiz_name"
                 android:layout_marginTop="16dp"
                 android:textAllCaps="false"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 />
             <!-- Coin Icon -->
             <ImageView
