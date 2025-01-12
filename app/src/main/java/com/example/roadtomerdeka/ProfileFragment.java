@@ -116,6 +116,7 @@ public class ProfileFragment extends Fragment {
                     if (snapshot.exists()) {
                         String username = snapshot.child("username").getValue(String.class);
                         String password = snapshot.child("password").getValue(String.class);
+                        String email = currentUser.getEmail(); // Get email from FirebaseAuth
 
                         if (username != null) {
                             usernameText.setText("@" + username); // Display username
@@ -125,6 +126,10 @@ public class ProfileFragment extends Fragment {
                         if (password != null) {
                             actualPassword = password; // Store the real password
                             inputPassword.setText(maskPassword(password.length())); // Display masked password
+                        }
+
+                        if (email != null) {
+                            inputEmail.setText(email); // Display email
                         }
 
                         // Hide progress bar and show content

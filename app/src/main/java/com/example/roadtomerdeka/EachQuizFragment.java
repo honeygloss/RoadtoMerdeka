@@ -28,7 +28,9 @@ import android.animation.ArgbEvaluator;
 import android.content.res.ColorStateList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EachQuizFragment extends AppCompatActivity {
 
@@ -352,16 +354,63 @@ public class EachQuizFragment extends AppCompatActivity {
         // Mark quiz as completed in Firebase
         userProgressRef.child(quizId).child("completed").setValue(true);
 
-        // Pass data to the CompletedQuiz activity
-        Intent intent = new Intent(EachQuizFragment.this, CompletedQuiz.class);
-        intent.putExtra("score", score);
-        intent.putExtra("totalQuestions", questionList.size());
-        intent.putExtra("timeTaken", timeTakenFormatted);
-        startActivity(intent);
+        // Reference to the quiz scores for the current user and quiz
+        DatabaseReference quizScoreRef = FirebaseDatabase.getInstance()
+                .getReference("quiz_scores")
+                .child(userId)
+                .child(quizId);
 
-        // Close the current activity
-        finish();
+        // Update best score, attempts, and time taken
+        quizScoreRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int bestScore = 0;
+                long attemptCount = 0;
+
+                if (snapshot.exists()) {
+                    // Retrieve existing best score
+                    if (snapshot.child("best_score").exists()) {
+                        bestScore = snapshot.child("best_score").getValue(Integer.class);
+                    }
+
+                    // Retrieve existing attempt count
+                    if (snapshot.child("attempts").exists()) {
+                        attemptCount = snapshot.child("attempts").getChildrenCount();
+                    }
+                }
+
+                // Update best score if the current score is higher
+                if (score >= bestScore) {
+                    quizScoreRef.child("best_score").setValue(score);
+                }
+
+                // Add the current attempt to the database
+                Map<String, Object> attemptData = new HashMap<>();
+                attemptData.put("score", score);
+                attemptData.put("timeTaken", timeTakenFormatted);
+
+                quizScoreRef.child("attempts").child("attempt_" + (attemptCount + 1)).setValue(attemptData);
+
+                // Pass data to the CompletedQuiz activity
+                Intent intent = new Intent(EachQuizFragment.this, CompletedQuiz.class);
+                intent.putExtra("score", score);
+                intent.putExtra("totalQuestions", questionList.size());
+                intent.putExtra("timeTaken", timeTakenFormatted);
+                intent.putExtra("bestScore", Math.max(score, bestScore)); // Pass the updated best score
+                startActivity(intent);
+
+                // Close the current activity
+                finish();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(EachQuizFragment.this, "Failed to update score: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
 
 
     private void showLoadingIndicator() {

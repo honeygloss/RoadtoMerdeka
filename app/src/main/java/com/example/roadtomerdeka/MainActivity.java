@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         inputUsername = findViewById(R.id.input_username);
         buttonRegister = findViewById(R.id.register_button);
         signInLink = findViewById(R.id.sign_in_link);
+        progressBar = findViewById(R.id.registration_progress_bar);
 
         // Initialize Firebase Database References
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
@@ -125,6 +126,17 @@ public class MainActivity extends AppCompatActivity {
 
                             // Save user data and initialize progress
                             saveUserData(userId, username, email, password);
+
+                            // Redirect to LoginActivity after successful registration
+                            Toast.makeText(MainActivity.this, "Registration successful! Please log in.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+
+                            // Apply the slide-in-right animation
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+                            // Finish the current activity so the user can't go back here
+                            finish();
                         }
                     } else {
                         Toast.makeText(MainActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -149,14 +161,9 @@ public class MainActivity extends AppCompatActivity {
                 .child(userId)
                 .child("quiz_status");
 
-        DatabaseReference quizScoresRef = FirebaseDatabase.getInstance()
-                .getReference("quiz_scores")
-                .child(userId);
-
         quizzesRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult().exists()) {
                 Map<String, Object> quizProgress = new HashMap<>();
-                Map<String, Object> quizScores = new HashMap<>();
                 boolean firstQuiz = true;
 
                 for (DataSnapshot quizSnapshot : task.getResult().getChildren()) {
@@ -167,12 +174,8 @@ public class MainActivity extends AppCompatActivity {
                     quizProgress.put(quizKey, new HashMap<String, Object>() {{
                         put("completed", false);
                         put("locked", !finalFirstQuiz);
-                    }});
-
-                    // Initialize quiz scores
-                    quizScores.put(quizKey, new HashMap<String, Object>() {{
-                        put("best_score", 0); // Set initial best score to 0
-                        put("attempts", new HashMap<String, Object>()); // Empty attempts node
+                        put("best_score", 0); // Add best_score to user_progress
+                        put("attempts", new HashMap<String, Object>()); // Add attempts to user_progress
                     }});
 
                     firstQuiz = false; // Only the first quiz will be unlocked
@@ -181,14 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 // Save quiz progress
                 userProgressRef.setValue(quizProgress).addOnCompleteListener(progressTask -> {
                     if (progressTask.isSuccessful()) {
-                        // Save quiz scores
-                        quizScoresRef.setValue(quizScores).addOnCompleteListener(scoresTask -> {
-                            if (scoresTask.isSuccessful()) {
-                                Toast.makeText(MainActivity.this, "Quiz progress and scores initialized!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(MainActivity.this, "Failed to initialize quiz scores: " + scoresTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        Toast.makeText(MainActivity.this, "Quiz progress initialized successfully!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Failed to initialize quiz progress: " + progressTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -197,13 +193,46 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Failed to fetch quizzes: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
 
+        // Initialize chapter_status
+        DatabaseReference chapterStatusRef = userProgressRef.child("chapter_status");
+
+        DatabaseReference chaptersRef = FirebaseDatabase.getInstance().getReference("chapters");
+        chaptersRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult().exists()) {
+                Map<String, Object> chapterProgress = new HashMap<>();
+                boolean firstChapter = true;
+
+                for (DataSnapshot chapterSnapshot : task.getResult().getChildren()) {
+                    String chapterKey = chapterSnapshot.getKey();
+
+                    // Initialize chapter progress
+                    boolean finalFirstChapter = firstChapter;
+                    chapterProgress.put(chapterKey, new HashMap<String, Object>() {{
+                        put("locked", !finalFirstChapter); // Only first chapter unlocked
+                    }});
+
+                    firstChapter = false; // All other chapters locked
+                }
+
+                // Save chapter progress
+                chapterStatusRef.setValue(chapterProgress).addOnCompleteListener(progressTask -> {
+                    if (progressTask.isSuccessful()) {
+                        Toast.makeText(MainActivity.this, "Chapter progress initialized successfully!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed to initialize chapter progress: " + progressTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(MainActivity.this, "Failed to fetch chapters: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
 
 }

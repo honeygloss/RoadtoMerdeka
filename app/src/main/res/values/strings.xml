@@ -29,4 +29,6 @@
     <string name="quotes">History to independence</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_title">No Title</string>
+    <string name="no_content">No Content</string>
 </resources>

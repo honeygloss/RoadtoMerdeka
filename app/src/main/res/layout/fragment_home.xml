@@ -130,6 +130,9 @@
                 android:textColor="@color/white"
                 android:layout_below="@id/quiz_name"
                 android:layout_marginTop="16dp"
+                android:textAllCaps="false"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
                 />
             <!-- Coin Icon -->
             <ImageView

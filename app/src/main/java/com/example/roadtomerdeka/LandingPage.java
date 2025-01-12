@@ -30,7 +30,7 @@ public class LandingPage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LandingPage.this, MainActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
 
@@ -40,7 +40,7 @@ public class LandingPage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LandingPage.this, LoginActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
     }

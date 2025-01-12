@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -68,6 +69,10 @@ public class HomeFragment extends Fragment {
         chapterRedirect = view.findViewById(R.id.chapter_redirect);
         quizRedirect = view.findViewById(R.id.quiz_redirect);
 
+        // Play Now Button
+        Button playNowButton = view.findViewById(R.id.play_now_button);
+        playNowButton.setOnClickListener(v -> navigateToFragment(new ChaptersFragment()));
+
         // Fetch user data
         fetchUserData(userId);
 
@@ -95,25 +100,29 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Fetch scores and progress
-        userRef.child("quiz_scores").addListenerForSingleValueEvent(new ValueEventListener() {
+        // Fetch total best scores and calculate progress
+        DatabaseReference quizScoresRef = FirebaseDatabase.getInstance().getReference("quiz_scores").child(userId);
+        quizScoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int totalScores = 0;
-                int totalPossibleScores = 0;
+                int totalBestScores = 0;
+                int totalPossibleScores = 600; // Fixed base total marks for all quizzes
 
                 for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
-                    int score = quizSnapshot.child("score").getValue(Integer.class);
-                    int maxScore = quizSnapshot.child("max_score").getValue(Integer.class);
-                    totalScores += score;
-                    totalPossibleScores += maxScore;
+                    // Iterate over quiz keys to access "best_score"
+                    Integer bestScore = quizSnapshot.child("best_score").getValue(Integer.class);
+                    if (bestScore != null) {
+                        totalBestScores += bestScore; // Sum up best scores
+                    }
                 }
 
-                scoresText.setText(totalScores + " scores");
-                if (totalPossibleScores > 0) {
-                    int progress = (totalScores * 100) / totalPossibleScores;
-                    progressBar.setProgress(progress);
-                }
+                // Display total best scores
+                scoresText.setText(totalBestScores + " scores");
+
+                int progress = (totalBestScores * 100) / totalPossibleScores;
+                if (progress > 100) progress = 100; // Cap progress at 1 if it exceeds the total possible score
+
+                progressBar.setProgress(progress);
             }
 
             @Override
@@ -122,45 +131,51 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Fetch current quiz name
-        userRef.child("quiz_status")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            int chapterNumber = 1; // Start with Chapter 1
-                            boolean foundCurrentQuiz = false;
+        // Fetch quiz status
+        DatabaseReference userProgressRef = FirebaseDatabase.getInstance()
+                .getReference("user_progress")
+                .child(userId)
+                .child("quiz_status");
 
-                            for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
-                                Boolean locked = quizSnapshot.child("locked").getValue(Boolean.class);
-                                Boolean completed = quizSnapshot.child("completed").getValue(Boolean.class);
+        userProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int chapterNumber = 1; // Start with Chapter 1
+                    int latestUnlockedChapter = -1; // Track the latest unlocked chapter
+                    for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
+                        Boolean locked = quizSnapshot.child("locked").getValue(Boolean.class);
 
-                                // Check if the quiz is unlocked and not completed
-                                if (locked != null && !locked && completed != null && !completed) {
-                                    quizNameText.setText("Chapter " + chapterNumber);
-                                    foundCurrentQuiz = true;
-                                    break; // Stop after finding the first matching quiz
-                                }
+                        // Debugging Logs
+                        System.out.println("Chapter: " + chapterNumber + ", Locked: " + locked);
 
-                                // Increment the chapter number for the next quiz
-                                chapterNumber++;
-                            }
-
-                            if (!foundCurrentQuiz) {
-                                quizNameText.setText("No unlocked quiz");
-                            }
-                        } else {
-                            quizNameText.setText("No unlocked quiz");
+                        // Check if the quiz is unlocked
+                        if (locked != null && !locked) {
+                            latestUnlockedChapter = chapterNumber;
                         }
+
+                        chapterNumber++;
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(getContext(), "Failed to fetch quiz!", Toast.LENGTH_SHORT).show();
+                    // Display the latest unlocked quiz
+                    if (latestUnlockedChapter != -1) {
+                        quizNameText.setText("Chapter " + latestUnlockedChapter);
+                    } else {
+                        quizNameText.setText("No unlocked quiz");
                     }
-                });
+                } else {
+                    quizNameText.setText("No unlocked quiz");
+                    System.out.println("No quiz status data found for user: " + userId);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Failed to fetch quiz status!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     private void navigateToFragment(Fragment fragment) {
         if (getActivity() != null) {

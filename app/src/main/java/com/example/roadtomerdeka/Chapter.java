@@ -1,22 +1,38 @@
 package com.example.roadtomerdeka;
+
 public class Chapter {
-    private int id;
+    private String id;
+    private String chapterHeader;
     private String title;
     private String description;
-    private int imageResId;
-    private boolean isLocked;
+    private String imageResId;
+    private String content;
+    private String imageChapter;
 
     // Constructor
-    public Chapter(int id, String title, String description, int imageResId, boolean isLocked) {
+    public Chapter() {
+        // Required for Firebase
+    }
+
+    public Chapter(String id, String chapterHeader, String title, String description, String imageResId, String content, String imageChapter) {
         this.id = id;
+        this.chapterHeader = chapterHeader;
         this.title = title;
         this.description = description;
         this.imageResId = imageResId;
-        this.isLocked = isLocked;
+        this.content = content;
+        this.imageChapter = imageChapter;
     }
 
     // Getters
-    public int getId() { return id; }
+    public String getId() {
+        return id;
+    }
+
+    public String getChapterHeader() {
+        return chapterHeader;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -25,11 +41,15 @@ public class Chapter {
         return description;
     }
 
-    public int getImageResId() {
+    public String getImageResId() {
         return imageResId;
     }
 
-    public boolean isLocked() {
-        return isLocked;
+    public String getContent() {
+        return content;
+    }
+
+    public String getImageChapter() {
+        return imageChapter;
     }
 }

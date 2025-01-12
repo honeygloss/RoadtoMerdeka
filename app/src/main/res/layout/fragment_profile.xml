@@ -18,7 +18,7 @@
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:visibility="gone">
 
         <!-- Blue Background Header -->
         <View
@@ -181,7 +181,8 @@
                         android:text="@string/save_button"
                         android:fontFamily="@font/caprasimo_regular"
                         android:visibility="gone"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"/>
 
                     <!-- Cancel Button -->
                     <Button
@@ -193,6 +194,7 @@
                         android:textColor="@color/white"
                         android:fontFamily="@font/caprasimo_regular"
                         android:visibility="gone"
+                        android:textAllCaps="false"
                         />
                 </LinearLayout>
             </LinearLayout>

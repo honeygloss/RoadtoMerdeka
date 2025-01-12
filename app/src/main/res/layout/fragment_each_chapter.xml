@@ -1,84 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bordered_background"
-    android:padding="20dp">
-
-    <!-- Chapter Image -->
-    <ImageView
-        android:id="@+id/chapter_image"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/chapter_image_desc" />
-
-    <!-- Horizontal LinearLayout for Chapter Title and Play Button -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <!-- Chapter Title -->
-        <TextView
-            android:id="@+id/chapter_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Chapter Title"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/caprasimo_regular"
-            android:paddingTop="16dp" />
-
-        <!-- Play/Pause Button -->
-        <ImageButton
-            android:id="@+id/play_pause_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/play"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="play_button_desc"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp" />
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@drawable/bordered_background" android:padding="20dp">
+    <!--  Chapter Image  -->
+    <ImageView android:id="@+id/chapter_image" android:layout_width="match_parent" android:layout_height="250dp" android:scaleType="centerCrop" android:contentDescription="@string/chapter_image_desc"/>
+    <!--  Chapter Title  -->
+    <TextView android:id="@+id/chapter_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Chapter Title" android:textSize="24sp" android:textColor="@color/black" android:fontFamily="@font/caprasimo_regular" android:paddingTop="16dp"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_gravity="center" android:paddingTop="16dp">
+        <ImageButton android:id="@+id/play_audio_button" android:layout_width="50dp" android:layout_height="50dp" android:background="@null" android:src="@drawable/play_icon" android:contentDescription="@string/play_audio"/>
+        <TextView android:id="@+id/audio_status" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingStart="16dp" android:text="Play Audio" android:textSize="16sp" android:textColor="@color/black" android:fontFamily="@font/timeless_memories_regular"/>
     </LinearLayout>
-
-    <!-- Chapter Description -->
-    <TextView
-        android:id="@+id/chapter_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/timeless_memories_regular"
-        android:paddingTop="8dp"
-        android:text="Chapter Description"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:id="@+id/quiz_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/quizzes" />
-
-        <TextView
-            android:id="@+id/take_quiz_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:text="Take a Quiz"
-            android:fontFamily="@font/timeless_memories_regular"
-            android:textColor="@color/blue3"
-            android:textSize="16sp" />
-    </LinearLayout>
-
+    <!--  Scrollable Content  -->
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:paddingTop="8dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+            <!--  Chapter Content  -->
+            <TextView android:id="@+id/chapter_content" android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="@font/timeless_memories_regular" android:paddingBottom="16dp" android:text="Chapter Description" android:textColor="@color/black" android:textSize="18sp"/>
+            <!--  Quiz Section  -->
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_gravity="center">
+                <ImageView android:id="@+id/quiz_icon" android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/quizzes"/>
+                <TextView android:id="@+id/take_quiz_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingStart="10dp" android:text="Take a Quiz" android:fontFamily="@font/timeless_memories_regular" android:textColor="@color/blue" android:textSize="16sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

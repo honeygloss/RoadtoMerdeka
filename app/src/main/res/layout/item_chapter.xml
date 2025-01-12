@@ -1,97 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="4dp"
-    android:radius="20dp"
-    android:background="@android:color/white"
-    android:layout_margin="8dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!-- Chapter Header Title -->
-        <TextView
-            android:id="@+id/text_chapter_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/chapter_num"
-            android:textSize="30sp"
-            android:fontFamily="@font/caprasimo_regular"
-            android:textColor="@color/black"
-            android:paddingLeft="15dp" />
-
-        <!-- Frame Layout Container -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
-
-            <!-- Abdul Rahman's Image Positioned to Overlay Above the FrameLayout -->
-            <ImageView
-                android:id="@+id/image_array"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/abdulrahman"
-                android:layout_marginTop="-10dp"
-                android:layout_gravity="end" />
-
-            <!-- Content Container -->
-            <LinearLayout
-                android:id="@+id/chapter_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_margin="15dp"
-                android:padding="25dp">
-
-                <!-- Chapter Title Inside the Content -->
-                <TextView
-                    android:id="@+id/text_chapter_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter Title"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/caprasimo_regular"
-                    android:textColor="@color/black"
-                    android:paddingBottom="4dp" />
-
-                <!-- Chapter Description Inside the Content -->
-                <TextView
-                    android:id="@+id/text_chapter_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chapter Description"
-                    android:fontFamily="@font/timeless_memories_regular"
-                    android:textSize="15sp"
-                    android:textColor="@color/black"
-                    android:paddingTop="4dp" />
-
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/card_view" android:layout_width="match_parent" android:layout_height="wrap_content" app:cardElevation="4dp" android:radius="20dp" android:background="@android:color/white" android:layout_margin="8dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+        <!--  Chapter Header Title  -->
+        <TextView android:id="@+id/text_chapter_header" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/chapter_num" android:textSize="30sp" android:fontFamily="@font/caprasimo_regular" android:textColor="@color/black" android:paddingLeft="15dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="153dp">
+            <!--  Abdul Rahman's Image  -->
+            <ImageView android:id="@+id/image_array" android:layout_width="114dp" android:layout_height="160dp" android:layout_marginTop="-10dp" android:src="@drawable/abdulrahman" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+            <!--  Content Container  -->
+            <!--  Lock Icon  -->
+            <LinearLayout android:id="@+id/chapter_content" android:layout_width="266dp" android:layout_height="136dp" android:layout_margin="15dp" android:orientation="vertical" android:padding="25dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@id/image_array" app:layout_constraintHorizontal_bias="0.551" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0">
+                <!--  Chapter Title  -->
+                <!--  Chapter Description  -->
+                <TextView android:id="@+id/text_chapter_title" android:layout_width="247dp" android:layout_height="wrap_content" android:fontFamily="@font/caprasimo_regular" android:paddingBottom="4dp" android:text="Chapter Title" android:textColor="@color/black" android:textSize="18sp"/>
+                <TextView android:id="@+id/text_chapter_desc" android:layout_width="235dp" android:layout_height="67dp" android:fontFamily="@font/timeless_memories_regular" android:paddingTop="4dp" android:text="Chapter Description" android:textColor="@color/black" android:textSize="12sp"/>
             </LinearLayout>
-
-            <!-- Lock Icon -->
-            <ImageView
-                android:id="@+id/image_chapter_lock"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/lock"
-                android:visibility="gone"
-                android:layout_gravity="end|center_vertical"
-                android:padding="8dp" />
-
-            <!-- Blur Overlay -->
-            <View
-                android:id="@+id/blur_overlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#80FFFFFF"
-                android:visibility="gone" />
-        </FrameLayout>
+            <ImageView android:id="@+id/image_chapter_lock" android:layout_width="50dp" android:layout_height="50dp" android:padding="8dp" android:src="@drawable/lock" android:visibility="gone" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+            <!--  Blur Overlay  -->
+            <View android:id="@+id/blur_overlay" android:layout_width="match_parent" android:layout_height="match_parent" android:background="#80FFFFFF" android:visibility="gone" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
-
-
-

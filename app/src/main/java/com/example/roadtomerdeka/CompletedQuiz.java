@@ -11,10 +11,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 public class CompletedQuiz extends AppCompatActivity {
 
     private ProgressBar progressBar;
-    private TextView pointsEarnedText, bestScoreText, timeTakenText;
+    private TextView pointsEarnedText, bestScoreText, timeTakenText, attemptsText;
     private Button playAgainButton, continueButton;
 
     ImageView confettiGif;
@@ -41,14 +43,16 @@ public class CompletedQuiz extends AppCompatActivity {
         int totalQuestions = getIntent().getIntExtra("totalQuestions", 0);
         String timeTaken = getIntent().getStringExtra("timeTaken");
         int bestScore = getIntent().getIntExtra("bestScore", 0);
+        ArrayList<String> attempts = getIntent().getStringArrayListExtra("attempts");
 
         // Update Progress Bar
-        progressBar.setProgress((score * 100) / totalQuestions);
+        progressBar.setProgress(score/totalQuestions*10);
 
         // Update Text Views
         pointsEarnedText.setText("Points Earned: " + score);
-        bestScoreText.setText("Best Score: " + Math.max(score, bestScore)); // Compare current score with best
+        bestScoreText.setText("Best Score: " + bestScore);
         timeTakenText.setText("Time Taken: " + timeTaken);
+
 
         // Play Again Button
         playAgainButton.setOnClickListener(v -> {
@@ -60,7 +64,7 @@ public class CompletedQuiz extends AppCompatActivity {
 
         // Continue Journey Button
         continueButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, Home.class);
+            Intent intent = new Intent(this, ChaptersFragment.class);
             startActivity(intent);
             finish();
         });

@@ -1,6 +1,7 @@
-package com.example.roadtomerdeka;
+package com.example.roadtomerdeka; //ChapterAdapter 3:37pm 11/1/2024
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,39 +12,37 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterViewHolder> {
 
     private final List<Chapter> chapterList;
+    private FragmentManager fragmentManager;
     private Context context;
+    private Map<String, Boolean> userCompletedChapters;
     private int[] imageResources = {
             R.drawable.abdulrahman, // Replace with your actual drawable resource names
             R.drawable.tugu,
             R.drawable.jebat,
             R.drawable.bendera,
     };
-    private int[] paletteColors;
 
-    public ChapterAdapter(List<Chapter> chapterList) {
+    public ChapterAdapter(List<Chapter> chapterList, FragmentManager fragmentManager, Context context, Map<String, Boolean> userCompletedChapters) {
         this.chapterList = chapterList;
-        initializeColors(); // Initialize colors
+        this.fragmentManager = fragmentManager;
+        this.context = context;
+        this.userCompletedChapters = userCompletedChapters;
     }
 
-    // Initialize colors from color resources
-    private void initializeColors() {
-        paletteColors = new int[] {
-                context.getResources().getColor(R.color.palette_color_1),
-                context.getResources().getColor(R.color.palette_color_2),
-                context.getResources().getColor(R.color.palette_color_3),
-                context.getResources().getColor(R.color.palette_color_4),
-        };
-    }
 
     @NonNull
     @Override
@@ -56,40 +55,50 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
     public void onBindViewHolder(@NonNull ChapterViewHolder holder, int position) {
         Chapter chapter = chapterList.get(position);
 
-        holder.chapterTitle.setText(chapter.getTitle());
-        holder.chapterDesc.setText(chapter.getDescription());
-        holder.chapterImage.setImageResource(chapter.getImageResId()); // Set image resource from the Chapter object
 
-        // Set random background color for the chapter content container
-        int randomColor = paletteColors[new Random().nextInt(paletteColors.length)];
-        holder.chapterContent.setBackgroundColor(randomColor);
+        // Lock and unlock mechanism based on previous chapter completion
+        boolean isLocked;
+        if (position > 0) {
+            String previousChapterId = chapterList.get(position - 1).getId();
+            isLocked = !userCompletedChapters.containsKey(previousChapterId) || !userCompletedChapters.get(previousChapterId);
+        } else {
+            isLocked = false;
+        }
+        holder.bind(chapter);
 
-        // Handle lock state
-        if (chapter.isLocked()) {
+        // Update the UI based on whether the chapter is locked or unlocked
+        if (isLocked) {
             holder.lockIcon.setVisibility(View.VISIBLE);
             holder.blurOverlay.setVisibility(View.VISIBLE);
-            holder.chapterContent.setEnabled(false);
+            holder.chapterImage.setVisibility(View.GONE);
         } else {
             holder.lockIcon.setVisibility(View.GONE);
             holder.blurOverlay.setVisibility(View.GONE);
-            holder.chapterContent.setEnabled(true);
+            holder.chapterImage.setVisibility(View.VISIBLE);
         }
-        // Set click listener for chapter content to navigate to the respective fragment
-        holder.chapterContent.setOnClickListener(v -> {
-            int chapterId = chapter.getId(); // Assuming each chapter has an ID
-            navigateToChapterFragment(chapterId);
-        });
-    }
-    private void navigateToChapterFragment(int chapterId) {
-        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        // Replace the current fragment with the ChapterFragment
-        ChaptersFragment chapterFragment = ChaptersFragment.newInstance(chapterId);
-        transaction.replace(R.id.fragment_container, chapterFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        // Use the same isLocked variable here for the click listener
+        holder.itemView.setOnClickListener(v -> {
+            // If the chapter is not locked, navigate to the chapter details
+            if (!isLocked) {
+                Intent intent = new Intent(context, EachChapterFragment.class);
+                intent.putExtra("chapter_id", chapter.getId());
+                context.startActivity(intent);
+            }
+        });
+
+
+        // Set the CardView background color with a palette
+        int[] colors = {
+                ContextCompat.getColor(context, R.color.palette_color_1),
+                ContextCompat.getColor(context, R.color.palette_color_2),
+                ContextCompat.getColor(context, R.color.palette_color_3)
+        };
+        int color = colors[position % colors.length];
+        holder.cardView.setCardBackgroundColor(color);
     }
+
+
     @Override
     public int getItemCount() {
         return chapterList.size();
@@ -100,19 +109,38 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         LinearLayout chapterContent;
         ImageView lockIcon;
         View blurOverlay;
-        ImageView chapterImage; // ImageView for the image
-        TextView chapterTitle, chapterDesc;
+        ImageView chapterImage;
+        TextView chapterId, chapterTitle, chapterDesc, chapterHeader;
         CardView cardView;
 
         public ChapterViewHolder(@NonNull View itemView) {
             super(itemView);
             chapterContent = itemView.findViewById(R.id.chapter_content);
             chapterTitle = itemView.findViewById(R.id.text_chapter_title);
+            chapterHeader = itemView.findViewById(R.id.text_chapter_header);
             chapterDesc = itemView.findViewById(R.id.text_chapter_desc);
-            chapterImage = itemView.findViewById(R.id.image_array); // Use the ImageView ID from your layout
-            cardView = itemView.findViewById(R.id.card_view); // Ensure this has the correct ID
+            chapterImage = itemView.findViewById(R.id.image_array);
+            cardView = itemView.findViewById(R.id.card_view);
             lockIcon = itemView.findViewById(R.id.image_chapter_lock);
             blurOverlay = itemView.findViewById(R.id.blur_overlay);
         }
+
+        public void bind(Chapter chapter) {
+            chapterTitle.setText(chapter.getTitle());
+            chapterDesc.setText(chapter.getDescription());
+            chapterHeader.setText(chapter.getChapterHeader());
+            // Load the image from the URL using Glide
+            Glide.with(itemView.getContext())
+                    .load(chapter.getImageResId()) // URL from the database
+                    .placeholder(R.drawable.placeholder_image) // Optional: Placeholder image while loading
+                    .error(R.drawable.error_image) // Optional: Error image if the load fails
+                    .into(chapterImage); // The ImageView to display the image
+            // Use the method to get the correct image resource ID
+            /*int imageResId = getDrawableResourceId(chapter.getId());
+
+            // Set the image in the ImageView
+            chapterImage.setImageResource(imageResId);*/
+        }
     }
 }
+
