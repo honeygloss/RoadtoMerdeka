@@ -5,13 +5,12 @@
     android:background="@drawable/aura_background">
 
     <!-- GIF Background -->
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/confetti_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/confetti"
-        android:visibility="gone" />
+       />
 
     <!-- Main Content -->
     <LinearLayout

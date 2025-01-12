@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 
 public class CompletedQuiz extends AppCompatActivity {
@@ -18,13 +17,15 @@ public class CompletedQuiz extends AppCompatActivity {
     private TextView pointsEarnedText, bestScoreText, timeTakenText;
     private Button playAgainButton, continueButton;
 
+    ImageView confettiGif;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completed_quiz);
 
         // Initialize Views
-        ImageView confettiGif = findViewById(R.id.confetti_background);
+        confettiGif = findViewById(R.id.confetti_background);
         progressBar = findViewById(R.id.progressBar);
         pointsEarnedText = findViewById(R.id.points_earned_text);
         bestScoreText = findViewById(R.id.best_score_text);
@@ -33,10 +34,7 @@ public class CompletedQuiz extends AppCompatActivity {
         continueButton = findViewById(R.id.continue_button);
 
         // Load Confetti Animation
-        Glide.with(this)
-                .asGif()
-                .load(R.drawable.confetti) // Ensure the confetti GIF is in res/raw or drawable
-                .into(confettiGif);
+        Glide.with(this).load(R.drawable.confetti).into(confettiGif);
 
         // Get data from Intent
         int score = getIntent().getIntExtra("score", 0);

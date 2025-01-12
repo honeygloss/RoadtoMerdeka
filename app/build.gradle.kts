@@ -43,8 +43,8 @@ dependencies {
     implementation("com.google.firebase:firebase-storage")
 
     // Glide for image loading
-    implementation("com.github.bumptech.glide:glide:4.15.1")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
 
     // PlutoGifDrawable for handling GIFs
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.25")
