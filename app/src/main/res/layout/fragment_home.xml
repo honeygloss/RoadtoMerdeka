@@ -33,42 +33,50 @@
             android:textColor="@color/blue"
             android:textStyle="bold" />
 
-        <com.github.furkankaplan.fkblurview.FKBlurView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
-            android:id="@+id/glass">
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_background2">
 
-                <TextView
-                    android:id="@+id/label_app"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/caprasimo_regular"
-                    android:text="Road to Merdeka"
-                    android:textColor="@color/blue3"
-                    android:textSize="36sp"
-                    android:textStyle="bold" />
+        <!-- FKBlurView containing "Road to Merdeka" -->
+        <com.github.furkankaplan.fkblurview.FKBlurView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/glass"
+            android:backgroundTint="@color/blue3">
 
-                <TextView
-                    android:id="@+id/info_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/desc"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_below="@id/label_app"
-                    android:fontFamily="@font/cambo"
-                    android:textColor="@color/blue"
-                    android:gravity="center"
-                     />
+            <TextView
+                android:id="@+id/label_app"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/caprasimo_regular"
+                android:text="Road to Merdeka"
+                android:textColor="@color/blue3"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                />
         </com.github.furkankaplan.fkblurview.FKBlurView>
 
-        <!-- Streak Progress -->
+        <TextView
+            android:id="@+id/new_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/desc"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:fontFamily="@font/cambo"
+        />
+    </LinearLayout>
+
+    <!-- Streak Progress -->
         <RelativeLayout
             android:id="@+id/rounded_linear_layout"
             android:layout_width="match_parent"
