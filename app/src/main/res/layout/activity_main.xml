@@ -17,8 +17,9 @@
     <!-- App Logo (Book Image) -->
     <ImageView
         android:id="@+id/logo_image"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="350dp"
+        android:layout_marginTop="-25dp"
         android:src="@drawable/book2"
         android:contentDescription="@string/app_name"
         android:layout_gravity="center_horizontal" />
@@ -29,7 +30,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="150dp"
         android:background="@drawable/rounded_section_blue">
 
         <LinearLayout
@@ -40,7 +41,6 @@
             android:gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
             android:layout_centerInParent="true">
 
             <!-- Title: Register Text -->
