@@ -63,7 +63,7 @@
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/timeless_memories_regular"
                 android:gravity="start"
-                android:text="@string/username_text"
+                android:text="@string/email_text"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -19,18 +19,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChaptersFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ChapterAdapter chapterAdapter;
     private List<Chapter> chapterList = new ArrayList<>();
-    private DatabaseReference chaptersRef, userProgressRef;
+    private DatabaseReference chaptersRef;
     private String userId;
-    private Map<String, Boolean> userCompletedChapters = new HashMap<>();
 
     private static final String TAG = "ChaptersFragment";
 
@@ -45,52 +42,14 @@ public class ChaptersFragment extends Fragment {
         // Get current user ID
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // Initialize Firebase references
+        // Initialize Firebase reference
         chaptersRef = FirebaseDatabase.getInstance().getReference("chapters");
-        userProgressRef = FirebaseDatabase.getInstance().getReference("user_progress").child(userId).child("chapter_status");
 
-        // Fetch user progress first
-        fetchUserProgress();
+        // Fetch chapters
+        loadChapters();
 
         return view;
     }
-
-    private void fetchUserProgress() {
-        DatabaseReference quizProgressRef = FirebaseDatabase.getInstance()
-                .getReference("user_progress").child(userId).child("quiz_status");
-
-        quizProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userCompletedChapters.clear();
-                Log.d(TAG, "Fetching quiz progress directly...");
-
-                // Iterate through quizzes
-                for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
-                    String quizId = quizSnapshot.getKey();
-                    Boolean completed = quizSnapshot.child("completed").getValue(Boolean.class);
-
-                    // Store quiz completion status directly
-                    if (quizId != null && completed != null) {
-                        userCompletedChapters.put(quizId, completed);
-                        Log.d(TAG, "Quiz ID: " + quizId + ", Completed: " + completed);
-                    }
-                }
-
-                // Fetch chapters after getting quiz progress
-                loadChapters();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Failed to fetch quiz progress: " + error.getMessage());
-                Toast.makeText(getContext(), "Failed to fetch quiz progress: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
-
 
     private void loadChapters() {
         chaptersRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,10 +70,8 @@ public class ChaptersFragment extends Fragment {
                     }
                 }
 
-                // Log user progress map to confirm locked/unlocked statuses
-                Log.d(TAG, "User Progress Map: " + userCompletedChapters);
-
-                chapterAdapter = new ChapterAdapter(chapterList, getParentFragmentManager(), getContext(), userCompletedChapters);
+                // Set the adapter without any lock functionality
+                chapterAdapter = new ChapterAdapter(chapterList, getParentFragmentManager(), getContext(), null);
                 recyclerView.setAdapter(chapterAdapter);
             }
 
@@ -129,35 +86,7 @@ public class ChaptersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshChapterState();
-    }
-
-    private void refreshChapterState() {
-        // Fetch updated user progress
-        userProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userCompletedChapters.clear();
-                Log.d(TAG, "Refreshing user progress...");
-                for (DataSnapshot chapterSnapshot : snapshot.getChildren()) {
-                    String chapterKey = chapterSnapshot.getKey();
-                    Boolean locked = chapterSnapshot.child("locked").getValue(Boolean.class);
-
-                    // Log the locked status for each chapter
-                    Log.d(TAG, "Chapter ID: " + chapterKey + ", Locked: " + locked);
-
-                    userCompletedChapters.put(chapterKey, locked != null ? locked : true); // Default locked if not found
-                }
-
-                // Reload chapters after refreshing progress
-                loadChapters();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Failed to fetch user progress: " + error.getMessage());
-                Toast.makeText(getContext(), "Failed to fetch user progress: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Reload chapters when the fragment resumes
+        loadChapters();
     }
 }

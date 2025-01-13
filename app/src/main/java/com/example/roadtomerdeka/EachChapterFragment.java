@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +23,6 @@ public class EachChapterFragment extends AppCompatActivity {
 
     private static final String TAG = "EachChapterFragment";
     private String chapterId;
-    private String userId;
     private ImageView chapterImage;
     private ImageView quizIcon;
     private TextView chapterTitle;
@@ -32,10 +30,7 @@ public class EachChapterFragment extends AppCompatActivity {
     private TextView takeQuizText;
     private ImageButton playAudioButton;
 
-    private FirebaseDatabase database;
     private DatabaseReference chapterRef;
-    private DatabaseReference userProgressRef;
-    private FirebaseUser currentUser;
 
     private MediaPlayer mediaPlayer;
     private boolean isPlaying = false;
@@ -45,50 +40,27 @@ public class EachChapterFragment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_each_chapter);
 
+        TextView justifiedParagraph = findViewById(R.id.chapter_content);
+        justifiedParagraph.setText(R.string.chapter_desc);
+
         // Retrieve the chapter ID from the Intent
         Intent intent = getIntent();
         chapterId = intent.getStringExtra("chapter_id");
         Log.d(TAG, "Retrieved chapterId: " + chapterId);
 
-        /*if (chapterId == null || chapterId.isEmpty()) {
-            Toast.makeText(this, "Invalid Chapter ID", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }*/
-
         // Initialize Firebase
-        database = FirebaseDatabase.getInstance("https://roadtomerdeka-6a28d-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        chapterRef = database.getReference("chapters").child(chapterId);
+        chapterRef = FirebaseDatabase.getInstance()
+                .getReference("chapters")
+                .child(chapterId);
 
         // Initialize UI components
         initializeUI();
-
-        // Get the current user
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
-            Log.e(TAG, "User is not authenticated!");
-            Toast.makeText(this, "Please log in to access this feature.", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-        userId = currentUser.getUid();
-        userProgressRef = database.getReference("user_progress").child(userId);
 
         // Load chapter data from Firebase
         fetchChapterData();
 
         // Handle audio playback
         playAudioButton.setOnClickListener(v -> handleAudioPlayback());
-
-        // Handle "Take a Quiz" click action
-        View.OnClickListener quizClickListener = v -> {
-            Intent quizIntent = new Intent(this, QuizAdapter.class);
-            quizIntent.putExtra("chapterId", chapterId);
-            startActivity(quizIntent);
-        };
-        quizIcon.setOnClickListener(quizClickListener);
-        takeQuizText.setOnClickListener(quizClickListener);
-        updateChapterProgress();
     }
 
     private void initializeUI() {
@@ -98,10 +70,17 @@ public class EachChapterFragment extends AppCompatActivity {
         playAudioButton = findViewById(R.id.play_audio_button);
         quizIcon = findViewById(R.id.quiz_icon);
         takeQuizText = findViewById(R.id.take_quiz_text);
+
+        // Handle "Take a Quiz" click
+        View.OnClickListener quizClickListener = v -> {
+            fetchAndNavigateToQuiz();
+        };
+        quizIcon.setOnClickListener(quizClickListener);
+        takeQuizText.setOnClickListener(quizClickListener);
     }
 
     private void fetchChapterData() {
-        chapterRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        chapterRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -174,11 +153,57 @@ public class EachChapterFragment extends AppCompatActivity {
         }
     }
 
-    private void updateChapterProgress() {
-        userProgressRef.child(chapterId).setValue(true)
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "Chapter progress updated"))
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to update chapter progress: " + e.getMessage()));
+    private void fetchAndNavigateToQuiz() {
+        chapterRef.child("quizId").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String quizId = snapshot.getValue(String.class);
+                if (quizId != null) {
+                    // Check if the quiz is locked
+                    checkQuizLockStatus(quizId);
+                } else {
+                    Toast.makeText(EachChapterFragment.this, "No quiz available for this chapter.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(EachChapterFragment.this, "Failed to fetch quiz data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    private void checkQuizLockStatus(String quizId) {
+        DatabaseReference quizStatusRef = FirebaseDatabase.getInstance()
+                .getReference("user_progress")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("quiz_status")
+                .child(quizId);
+
+        quizStatusRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Boolean isLocked = snapshot.child("locked").getValue(Boolean.class);
+                if (isLocked != null && isLocked) {
+                    Toast.makeText(EachChapterFragment.this, "This quiz is locked. Complete the previous chapter to unlock it.", Toast.LENGTH_SHORT).show();
+                    Intent homeIntent = new Intent(EachChapterFragment.this, Home.class);
+                    startActivity(homeIntent);
+                    finish();
+                } else {
+                    // Quiz is unlocked, navigate to the quiz
+                    Intent quizIntent = new Intent(EachChapterFragment.this, EachQuizFragment.class);
+                    quizIntent.putExtra("quizId", quizId);
+                    startActivity(quizIntent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(EachChapterFragment.this, "Failed to check quiz lock status: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     protected void onDestroy() {

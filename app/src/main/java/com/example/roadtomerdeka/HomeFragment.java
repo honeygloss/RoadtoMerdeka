@@ -1,6 +1,7 @@
 package com.example.roadtomerdeka;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,7 @@ public class HomeFragment extends Fragment {
 
         // Fetch total best scores and calculate progress
         DatabaseReference quizScoresRef = FirebaseDatabase.getInstance().getReference("quiz_scores").child(userId);
-        quizScoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        quizScoresRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int totalBestScores = 0;
@@ -138,27 +139,24 @@ public class HomeFragment extends Fragment {
                 .child(userId)
                 .child("quiz_status");
 
-        userProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        userProgressRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    int chapterNumber = 1; // Start with Chapter 1
-                    int latestUnlockedChapter = -1; // Track the latest unlocked chapter
+                    int chapterNumber = 1;
+                    int latestUnlockedChapter = -1;
+
                     for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
                         Boolean locked = quizSnapshot.child("locked").getValue(Boolean.class);
 
-                        // Debugging Logs
-                        System.out.println("Chapter: " + chapterNumber + ", Locked: " + locked);
+                        Log.d("HomeFragment", "Chapter: " + chapterNumber + ", Locked: " + locked);
 
-                        // Check if the quiz is unlocked
                         if (locked != null && !locked) {
                             latestUnlockedChapter = chapterNumber;
                         }
-
                         chapterNumber++;
                     }
 
-                    // Display the latest unlocked quiz
                     if (latestUnlockedChapter != -1) {
                         quizNameText.setText("Chapter " + latestUnlockedChapter);
                     } else {
@@ -166,7 +164,6 @@ public class HomeFragment extends Fragment {
                     }
                 } else {
                     quizNameText.setText("No unlocked quiz");
-                    System.out.println("No quiz status data found for user: " + userId);
                 }
             }
 
@@ -175,6 +172,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to fetch quiz status!", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +22,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -45,12 +49,28 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         View headerView = navigationView.getHeaderView(0); // Get the first header view
         TextView usernameTextView = headerView.findViewById(R.id.username_text_view);
 
-        // Retrieve the username from the Intent
-        String username = getIntent().getStringExtra("username");
-        if (username != null) {
-            usernameTextView.setText(username);
-        } else {
-            usernameTextView.setText("Welcome, User!");
+        // Add Realtime Listener for Username
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            String userId = mAuth.getCurrentUser().getUid();
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+
+            userRef.child("username").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String updatedUsername = snapshot.getValue(String.class);
+                    if (updatedUsername != null) {
+                        usernameTextView.setText(updatedUsername);
+                    } else {
+                        usernameTextView.setText("Welcome, User!"); // Fallback if username is null
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("HomeActivity", "Error fetching username: " + error.getMessage());
+                }
+            });
         }
 
         // Set NavigationView listener
@@ -138,7 +158,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         if (auth.getCurrentUser() != null) {
             String userId = auth.getCurrentUser().getUid();
 
-            // Confirm account deletion
+            // Notify the user that deletion is in progress
             Toast.makeText(this, "Deleting account...", Toast.LENGTH_SHORT).show();
 
             // Remove user data from both 'users' and 'user_progress' nodes
@@ -152,11 +172,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                                     // Notify user of success
                                     Toast.makeText(this, "Account deleted successfully!", Toast.LENGTH_SHORT).show();
 
-                                    // Redirect to LoginActivity
+                                    // Redirect to LoginActivity after successful deletion
                                     Intent intent = new Intent(Home.this, LoginActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
-                                    finish(); // Close the current activity
+
+                                    // Finish the current activity
+                                    finish();
                                 } else {
                                     // Handle errors during account deletion
                                     Toast.makeText(this, "Error: " + deleteTask.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -174,5 +196,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             });
         }
     }
+
 
 }

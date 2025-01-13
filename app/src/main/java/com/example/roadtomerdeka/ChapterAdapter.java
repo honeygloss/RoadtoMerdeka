@@ -54,51 +54,23 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         return new ChapterViewHolder(view);
     }
 
-    @Override
     public void onBindViewHolder(@NonNull ChapterViewHolder holder, int position) {
         Chapter chapter = chapterList.get(position);
 
-        // Get corresponding quiz ID
-        String quizId = chapter.getQuizId(); // Ensure `Chapter` has a `getQuizId` method or similar
-        boolean isLocked = false;
-
-        if (position > 0 && quizId != null) {
-            // Check if the quiz is completed
-            isLocked = !userCompletedChapters.containsKey(quizId) || !userCompletedChapters.get(quizId);
-        }
-
-        // Debug log to track locking status
-        Log.d("ChapterAdapter", "Chapter: " + chapter.getId() + ", Quiz ID: " + quizId + ", Is Locked: " + isLocked);
-
-        // Update the UI based on lock status
-        if (isLocked) {
-            holder.lockIcon.setVisibility(View.VISIBLE);
-            holder.blurOverlay.setVisibility(View.VISIBLE);
-            holder.chapterImage.setVisibility(View.GONE);
-            Log.d("ChapterAdapter", "Locked UI applied for Chapter: " + chapter.getId());
-        } else {
-            holder.lockIcon.setVisibility(View.GONE);
-            holder.blurOverlay.setVisibility(View.GONE);
-            holder.chapterImage.setVisibility(View.VISIBLE);
-            Log.d("ChapterAdapter", "Unlocked UI applied for Chapter: " + chapter.getId());
-        }
+        // Debug logs to track chapter data
+        Log.d("ChapterAdapter", "Chapter: " + chapter.getId());
 
         // Bind data to the view
         holder.bind(chapter);
 
         // Set click listener
-        boolean finalIsLocked = isLocked;
         holder.itemView.setOnClickListener(v -> {
-            if (!finalIsLocked) {
-                Intent intent = new Intent(context, EachChapterFragment.class);
-                intent.putExtra("chapter_id", chapter.getId());
-                context.startActivity(intent);
-            } else {
-                Toast.makeText(context, "This chapter is locked!", Toast.LENGTH_SHORT).show();
-            }
+            Intent intent = new Intent(context, EachChapterFragment.class);
+            intent.putExtra("chapter_id", chapter.getId());
+            context.startActivity(intent);
         });
 
-        // Set the CardView background color with a palette
+        // Set the background color
         int[] colors = {
                 ContextCompat.getColor(context, R.color.palette_color_1),
                 ContextCompat.getColor(context, R.color.palette_color_2),
@@ -107,9 +79,6 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         int color = colors[position % colors.length];
         holder.frameLayout.setBackgroundColor(color);
     }
-
-
-
 
     @Override
     public int getItemCount() {

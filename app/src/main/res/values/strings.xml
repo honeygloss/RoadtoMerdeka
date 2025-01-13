@@ -4,11 +4,11 @@
     <string name="register_text">Register</string>
     <string name="login_text">Login</string>
     <string name="username_text">Username</string>
-    <string name="login_field">Enter username or email</string>
+    <string name="login_field">Enter email</string>
     <string name="email_text">Email</string>
     <string name="password_text">Password</string>
     <string name="confirmpass_text">Confirm Password</string>
-    <string name="username_field">Enter your username</string>
+    <string name="username_field">Enter your email</string>
     <string name="email_field">Enter your email</string>
     <string name="password_field">Enter your password</string>
     <string name="confirmpass_field">Confirm Password</string>
@@ -27,6 +27,7 @@
     <string name="chapters_headline">Chapters</string>
     <string name="chapter_image_desc">Image representing the chapter</string>
     <string name="quotes">History to independence</string>
+    <string name="chapter_desc">Chapter description</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_title">No Title</string>

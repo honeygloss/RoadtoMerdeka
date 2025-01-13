@@ -95,18 +95,23 @@ public class MainActivity extends AppCompatActivity {
             }
             if (password.length() < 6) {
                 inputPassword.setError("Password must be at least 6 characters!");
+                Toast.makeText(this, "Password must be at least 6 characters!", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (TextUtils.isEmpty(confirmPassword)) {
                 inputPassword2.setError("Confirm Password is required!");
+                Toast.makeText(this, "Confirm Password is required!", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (!password.equals(confirmPassword)) {
                 inputPassword2.setError("Passwords do not match!");
+                Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
+
                 return;
             }
             if (TextUtils.isEmpty(username)) {
                 inputUsername.setError("Username is required!");
+                Toast.makeText(this, "Username is required!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -185,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
                 // Save quiz progress
                 userProgressRef.setValue(quizProgress).addOnCompleteListener(progressTask -> {
                     if (progressTask.isSuccessful()) {
-                        Toast.makeText(MainActivity.this, "Quiz progress initialized successfully!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Failed to initialize quiz progress: " + progressTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -221,7 +225,6 @@ public class MainActivity extends AppCompatActivity {
 
                 chapterStatusRef.setValue(chapterProgress).addOnCompleteListener(progressTask -> {
                     if (progressTask.isSuccessful()) {
-                        Log.d("FirebaseWrite", "Chapter progress initialized successfully!");
                     } else {
                         Log.e("FirebaseWrite", "Failed to initialize chapter progress: " + progressTask.getException().getMessage());
                     }

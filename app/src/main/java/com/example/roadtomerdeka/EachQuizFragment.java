@@ -206,14 +206,14 @@ public class EachQuizFragment extends AppCompatActivity {
             playSound(R.raw.correct);
             playColorAnimation(selectedButton, getResources().getColor(R.color.white), getResources().getColor(R.color.green));
 
-            Toast.makeText(this, "Correct! +" + questionPoints + " points! (Streak: " + streakCount + ")", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
         } else {
             streakCount = 0;
             playSound(R.raw.wrong);
             playColorAnimation(selectedButton, getResources().getColor(R.color.white), getResources().getColor(R.color.red));
             playColorAnimation(correctButton, getResources().getColor(R.color.white), getResources().getColor(R.color.green));
 
-            Toast.makeText(this, "Incorrect! Streak reset.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
         }
         if (score == 0){
             scoreText.setText("0");
@@ -354,6 +354,9 @@ public class EachQuizFragment extends AppCompatActivity {
         // Mark quiz as completed in Firebase
         userProgressRef.child(quizId).child("completed").setValue(true);
 
+        // Unlock the next quiz
+        unlockNextQuiz();
+
         // Reference to the quiz scores for the current user and quiz
         DatabaseReference quizScoreRef = FirebaseDatabase.getInstance()
                 .getReference("quiz_scores")
@@ -397,6 +400,7 @@ public class EachQuizFragment extends AppCompatActivity {
                 intent.putExtra("totalQuestions", questionList.size());
                 intent.putExtra("timeTaken", timeTakenFormatted);
                 intent.putExtra("bestScore", Math.max(score, bestScore)); // Pass the updated best score
+                intent.putExtra("quizId", quizId); // Pass the quizId
                 startActivity(intent);
 
                 // Close the current activity
@@ -410,6 +414,40 @@ public class EachQuizFragment extends AppCompatActivity {
         });
     }
 
+    private void unlockNextQuiz() {
+        DatabaseReference userProgressRef = FirebaseDatabase.getInstance()
+                .getReference("user_progress")
+                .child(userId)
+                .child("quiz_status");
+
+        userProgressRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean unlockNext = false;
+
+                for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
+                    if (unlockNext) {
+                        // Unlock the next quiz
+                        quizSnapshot.getRef().child("locked").setValue(false);
+                        Log.d("EachQuizFragment", "Unlocked quiz: " + quizSnapshot.getKey());
+                        break;
+                    }
+
+                    if (quizSnapshot.getKey().equals(quizId)) {
+                        // Found the current quiz, unlock the next one in the sequence
+                        unlockNext = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("EachQuizFragment", "Failed to unlock the next quiz: " + error.getMessage());
+            }
+        });
+    }
+
+
 
 
 
@@ -422,4 +460,5 @@ public class EachQuizFragment extends AppCompatActivity {
         loadingIndicator.setVisibility(View.GONE);
         findViewById(R.id.question_layout).setVisibility(View.VISIBLE);
     }
+
 }
